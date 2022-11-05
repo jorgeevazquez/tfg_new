@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TFG News</string>
+    <string name="description_iv_cv">Image of new from gallery</string>
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="til_hint_text">Write here...</string>
+    <string name="til_hint_text_fragment">Write URL...</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
