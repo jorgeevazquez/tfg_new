@@ -28,6 +28,7 @@ class NewsAdapter(private val news: MutableList<NewsDataClass>, private val cont
     // Get element from your dataset at this position and replace the
     // contents of the view with that element
 
+
     override fun getItemCount(): Int {
         //Mutable.Size
         return news.size
