@@ -16,7 +16,7 @@ import com.example.tfgnews.databinding.NoticeCardBinding
 class MainActivity : AppCompatActivity() {
     private var list = mutableListOf<NewsDataClass>()
     private lateinit var mBinding: ActivityMainBinding
-    private lateinit var recycler: NewsAdapter
+    private lateinit var mAdapter: NewsAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,30 +25,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         val model: MainViewModel by viewModels()
 
+
         mBinding.btnAdd.setOnClickListener {
-            isTextEmpty()
-            setupAdapter()
+            model.isTextEmpty(mBinding, list, this)
+            initsetupAdapter()
         }
     }
-
-    fun setupAdapter() {
-        recycler = NewsAdapter(list, this)
-        mBinding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = recycler
+        fun initsetupAdapter() {
+            mAdapter = NewsAdapter(list, this)
+            mBinding.recyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = mAdapter
+            }
         }
-
     }
-    fun isTextEmpty(){
-        val text1 =  NewsDataClass(String())
-        text1.notice = mBinding.etCard.text.toString()
-        val text = text1.notice
-        if (text.isEmpty()){
-            Toast.makeText(this, "Empty Text", Toast.LENGTH_SHORT).show()
-        }else
-            list.add(text1)
-    }
-}
 
 
 
