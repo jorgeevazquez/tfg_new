@@ -69,9 +69,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toEndOf="@id/tvImage"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        android:layout_margin="10dp" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
