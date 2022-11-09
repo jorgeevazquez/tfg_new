@@ -6,6 +6,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tfgnews.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+
+enum class ProviderType{
+    BASIC
+}
 
 
 
@@ -19,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        //setup
+
+
         val model: MainViewModel by viewModels()
 
 
@@ -26,14 +34,20 @@ class MainActivity : AppCompatActivity() {
             model.isTextEmpty(mBinding, list, this)
             initsetupAdapter()
         }
+        mBinding.singOut.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            onBackPressed()
+        }
     }
-        fun initsetupAdapter() {
+       private fun initsetupAdapter() {
             mAdapter = NewsAdapter(list, this)
             mBinding.recyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = mAdapter
             }
         }
+
+
     }
 
 

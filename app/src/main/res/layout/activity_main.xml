@@ -73,4 +73,12 @@
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         />
 
+    <Button
+        android:id="@+id/singOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sing out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
