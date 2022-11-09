@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "TFG News2"
+rootProject.name = "TFG News2 MVVM"
 include ':app'
