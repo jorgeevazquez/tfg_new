@@ -63,7 +63,7 @@
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp"
-        android:text="Inserta la imagen de tu mejor momento"/>
+        />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btGetImage"
@@ -73,6 +73,16 @@
         app:layout_constraintStart_toEndOf="@id/tvImage"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btGetImage2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintStart_toEndOf="@id/btGetImage"
+        app:layout_constraintTop_toBottomOf="@id/tilCard"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:background="@color/black"/>
 
     <Button
         android:id="@+id/singOut"

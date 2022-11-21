@@ -45,8 +45,6 @@ class AuthActivity : AppCompatActivity() {
                             showAlerts()
                         }
                     }
-
-
             }
         }
 
