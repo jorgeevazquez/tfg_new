@@ -26,7 +26,7 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //este metodo asocia la vista con los datos, debe contener un holder y la position
-        val textNew = news.get(position)
+        val textNew = news[position]
         holder.mBinding.tvCard.text = textNew.notice
        // holder.mBinding.imgCard.setImageURI(textNew.image) Glide
        Glide.with(holder.mBinding.imgCard).load(textNew.image).into(holder.mBinding.imgCard)

@@ -60,8 +60,8 @@ class UploadImage: AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        val imageSelect = mBinding.btGetImage
-        val butShare = mBinding.btGetImage2
+        val imageSelect = mBinding.btSelectImageFromGalery
+        val butShare = mBinding.btUploadImage
         //val userCommentText = findViewById<TextView>(R.id.)
 
         val storage = FirebaseStorage.getInstance()

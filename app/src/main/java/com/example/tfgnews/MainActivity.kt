@@ -38,20 +38,26 @@ class MainActivity : AppCompatActivity() {
         //setup
 
         val model: MainViewModel by viewModels()
+        initsetupAdapter()
+        model.getAllImagesMain(list)
 
         model.listaNewsMutableLivedata.observe(this){
             list = it
             mAdapter.updateAdapter(list)
+
         }
 
-        mBinding.btGetImage.setOnClickListener {
+
+        mBinding.btSelectImageFromGalery.setOnClickListener {
             showGalleryPhone()
         }
 
+        mBinding.btUploadImage.setOnClickListener {
+            model.saveFireStorage(uriCode)
+        }
+
         mBinding.btnAdd.setOnClickListener {
-            model.saveFireStorage(list,uriCode,mBinding)
-           // model.isTextEmpty(mBinding, list, this)
-           // model.saveFireBase(list)
+            model.isTextEmptyDowloadImage(mBinding,list,this)
             initsetupAdapter()
         }
         mBinding.singOut.setOnClickListener {
@@ -72,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showGalleryPhone() {
         getcontent.launch("image/*")
-        mBinding.tvImage.text = uriCode.toString()
 
     }
 

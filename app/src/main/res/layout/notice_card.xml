@@ -13,9 +13,8 @@
     <ImageView
         android:id="@+id/imgCard"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
+        android:layout_height="300dp"
         android:layout_margin="5dp"
-        android:background="@color/card_background"
         android:contentDescription="@string/description_iv_cv"
 
         />

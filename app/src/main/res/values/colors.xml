@@ -11,4 +11,5 @@
     <color name="card_background">#4D9E92D5</color>
     <color name="black_light">#8B272727</color>
     <color name="blue_light">#800353CF</color>
+    <color name="background_tv_main">#2D01579B</color>
 </resources>

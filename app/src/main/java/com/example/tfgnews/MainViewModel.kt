@@ -13,13 +13,19 @@ import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.android.gms.common.api.Response
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.Query
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.net.URI
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
@@ -27,7 +33,7 @@ class MainViewModel: ViewModel() {
     private val userId = mAuth.currentUser?.email.toString()
     val uuid = UUID.randomUUID()
     val imageName = "${uuid}.jpg"
-
+    var text1 = NewsDataClass(String(), String())
 
 
     //private val list = mutableListOf<NewsDataClass>()
@@ -38,32 +44,33 @@ class MainViewModel: ViewModel() {
         MutableLiveData()
     val listaNewsMutableLivedata: MutableLiveData<MutableList<NewsDataClass>> get() = _listaNewsMutableLivedata
 
-
-    fun isTextEmpty(
-        binding: ActivityMainBinding,
-        list: MutableList<NewsDataClass>,
-        context: Context
+    fun isTextEmptyDowloadImage(
+        binding: ActivityMainBinding, list: MutableList<NewsDataClass>, context: Context
     ) {
         //subida firestore
-        val text1 = NewsDataClass(String(), String())
+
         text1.notice = binding.etCard.text.toString()
         val text = text1.notice
         if (text.isEmpty()) {
             Toast.makeText(context, "Empty Text", Toast.LENGTH_SHORT).show()
-        } else list.add(text1)
-        _listaNewsMutableLivedata.postValue(list)
+        } else downloadImage(list, binding)
     }
 
 
-    fun saveFireStorage(list: MutableList<NewsDataClass>, uricode: Uri?, binding: ActivityMainBinding) {
+    fun saveFireStorage(
+        uricode: Uri?,
+    ) {
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
         if (uricode != null) {
             storageReference.putFile(uricode)
         }
+    }
 
+    fun downloadImage(list: MutableList<NewsDataClass>, binding: ActivityMainBinding) {
         //descargar URL
         val storageReferencetoDownload = FirebaseStorage.getInstance().reference
         val path = storageReferencetoDownload.child("$userId")
+
         //obtenerUrl
         path.child(imageName).downloadUrl.addOnSuccessListener { uri ->
             val text1 = NewsDataClass(String(), String())
@@ -73,82 +80,37 @@ class MainViewModel: ViewModel() {
             list.add(text1)
             _listaNewsMutableLivedata.postValue(list)
             //subida a firebase Database
-            val datos = hashMapOf("Data" to list) // subida de info
-            db.collection("Datos")
-                .document(userId)
-                .set(datos)
+            //val datos = hashMapOf("Data" to list) // subida de info
+            db.collection(userId)
+                .document()
+                .set(mapOf("notice" to text1.notice,
+                            "image" to text1.image
+                            ))
 
         }
 
-            }
-
-    fun saveFireBase(list: MutableList<NewsDataClass>) {
-    val datos = hashMapOf("Data" to list) // subida de info
-    db.collection("Datos")
-        .document(userId)
-        .set(datos)
-        }
-    fun downloadUrl(){
-        val storageReferencetoDownload = FirebaseStorage.getInstance().reference
-        val path = storageReferencetoDownload.child("jorgevazquez")
-        //obtenerUrl
-        path.child(imageName).downloadUrl.addOnSuccessListener { uri ->
-            Log.i("firebase", "$uri")
-
-        }
     }
 
-        }
+    fun getAllImagesMain(list:MutableList<NewsDataClass>) {
+        val allData = db.collection(userId)
+        allData.get().addOnSuccessListener { document ->
+           document.documents.forEach{
+              val image =  it.data?.get("image").toString()
+              val notice =  it.data?.get("notice").toString()
+               /*text1.notice = notice
+               text1.image = image*/
+               val classData = NewsDataClass(notice,image)
+               list.add(classData)
+               _listaNewsMutableLivedata.postValue(list)
+
+           }
 
 
-  /*  fun uploadImage(uricode: Uri?) {
-        val uuid = UUID.randomUUID()
-        val imageName = "${uuid}.jpg"
-        val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
-        if (uricode != null) {
-            storageReference.putFile(uricode)
-        }
-    }
-*/
-
-
-
-
-
-    /*fun getAllData() {
-        val listaprov = mutableListOf<NewsDataClass>()
-        db.collection("Datos")
-            .document(userId)
-            .get()
-            .addOnSuccessListener {
-                var datos = it.get("Datos")
-                _listaNewsMutableLivedata.value = (datos as MutableList<NewsDataClass>)
-               // _listaNewsMutableLivedata.postValue(it.get("Datos") as MutableList<NewsDataClass>)
             }
+            .addOnFailureListener { exception ->
+                Log.d("firebaseGet", "get failed with ", exception)
 
-    }
-}*/
-
-  /*  private val productRef: CollectionReference = db.collection("Datos")
-
-    fun getResponseFromFirestoreUsingLiveData(): MutableLiveData<MutableList<NewsDataClass>> {
-        val mutableLiveData = MutableLiveData<MutableList<NewsDataClass>>()
-        productRef.get().addOnCompleteListener { task ->
-            var response = listOf<NewsDataClass>()
-            if (task.isSuccessful) {
-                val result = task.result
-                result?.let {
-                    response = result.documents.mapNotNull() { snapShot ->
-                        snapShot.toObject(NewsDataClass::class.java)
-                    }
-                }
-            } else {
-                task.exception
             }
-            mutableLiveData.value = response as MutableList<NewsDataClass>
-        }
-        return mutableLiveData
     }
 }
-*/
 
