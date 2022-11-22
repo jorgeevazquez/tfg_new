@@ -1,7 +1,6 @@
 package com.example.tfgnews
 
 import android.content.Context
-
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.android.gms.common.api.Response
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
@@ -34,6 +34,7 @@ class MainViewModel: ViewModel() {
     val uuid = UUID.randomUUID()
     val imageName = "${uuid}.jpg"
     var text1 = NewsDataClass(String(), String())
+    val date = Timestamp.now()
 
 
     //private val list = mutableListOf<NewsDataClass>()
@@ -84,7 +85,8 @@ class MainViewModel: ViewModel() {
             db.collection(userId)
                 .document()
                 .set(mapOf("notice" to text1.notice,
-                            "image" to text1.image
+                            "image" to text1.image,
+                            "date" to date
                             ))
 
         }
@@ -92,7 +94,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getAllImagesMain(list:MutableList<NewsDataClass>) {
-        val allData = db.collection(userId)
+        val allData = db.collection(userId).orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
         allData.get().addOnSuccessListener { document ->
            document.documents.forEach{
               val image =  it.data?.get("image").toString()
