@@ -6,5 +6,5 @@ data class NewsDataClass(
     var notice: String = "",
     var image: String = ""
 ){
-    constructor(): this("","")
+
 }

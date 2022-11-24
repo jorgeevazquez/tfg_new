@@ -1,18 +1,15 @@
 package com.example.tfgnews
 
 
-import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
 
 enum class ProviderType{
     BASIC
@@ -27,10 +24,12 @@ class MainActivity : AppCompatActivity() {
     private var uriCode: Uri? = null
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-             uriCode = uri
+            if (uri != null) {
+                uriCode = uri
+
+            }
 
         }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,24 +42,24 @@ class MainActivity : AppCompatActivity() {
         initsetupAdapter()
         model.getAllImagesMain(list)
 
-        model.listaNewsMutableLivedata.observe(this){
+        model.listaNewsMutableLivedata.observe(this) {
             list = it
             mAdapter.updateAdapter(list)
-
         }
-
 
         mBinding.btSelectImageFromGalery.setOnClickListener {
             showGalleryPhone()
         }
 
         mBinding.btUploadImage.setOnClickListener {
-            model.saveFireStorage(uriCode)
+            model.saveFireStorage(uriCode, mBinding)
+
         }
 
         mBinding.btnAdd.setOnClickListener {
-            model.isTextEmptyDowloadImage(mBinding,list,this)
+            model.isTextEmptyDowloadImage(mBinding, list, this)
             initsetupAdapter()
+
         }
         mBinding.singOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -78,8 +77,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun showGalleryPhone() {
         getcontent.launch("image/*")
+        //mBinding.tvImage.text = uriCode.toString()
 
     }
 

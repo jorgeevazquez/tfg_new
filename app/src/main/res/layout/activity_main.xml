@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingVertical="20dp"
-        android:contentDescription="bottom"/>
+        android:contentDescription="bottom"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -26,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/btnAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvImage"
+        app:layout_constraintTop_toBottomOf="@id/PbImage"
         tools:listitem="@layout/notice_card"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,25 +56,26 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvImage"
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/PbImage"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/tilCard"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/background_tv_main"
+        android:progressBackgroundTint="@color/black"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
-        android:text="Select your image from your gallery"
-        android:textColor="@color/black"
-        android:background="@color/background_tv_main"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tilCard" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btSelectImageFromGalery"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        app:layout_constraintStart_toEndOf="@id/tvImage"
+        app:layout_constraintStart_toEndOf="@id/PbImage"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:ignore="SpeakableTextPresentCheck"
         android:src="@drawable/ic_image_search"
@@ -81,8 +83,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btUploadImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toEndOf="@id/btSelectImageFromGalery"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,5 +99,19 @@
         android:text="Sing out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProgressBar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="No hay imagen cargada"
+        android:textColor="@color/black"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/PbImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilCard"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

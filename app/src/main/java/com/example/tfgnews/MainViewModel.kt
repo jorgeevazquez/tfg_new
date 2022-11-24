@@ -48,7 +48,6 @@ class MainViewModel: ViewModel() {
     fun isTextEmptyDowloadImage(
         binding: ActivityMainBinding, list: MutableList<NewsDataClass>, context: Context
     ) {
-        //subida firestore
 
         text1.notice = binding.etCard.text.toString()
         val text = text1.notice
@@ -60,10 +59,19 @@ class MainViewModel: ViewModel() {
 
     fun saveFireStorage(
         uricode: Uri?,
+        binding: ActivityMainBinding
     ) {
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
         if (uricode != null) {
             storageReference.putFile(uricode)
+                .addOnProgressListener {
+                    val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
+                    binding.PbImage.progress = progress.toInt()
+                    binding.tvProgressBar.text = "Cargando imagen... + $progress"
+                }
+                .addOnCompleteListener {
+                    binding.tvProgressBar.text = "Imagen subida!"
+                }
         }
     }
 
@@ -94,7 +102,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getAllImagesMain(list:MutableList<NewsDataClass>) {
-        val allData = db.collection(userId).orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+        val allData = db.collection(userId).orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
         allData.get().addOnSuccessListener { document ->
            document.documents.forEach{
               val image =  it.data?.get("image").toString()
