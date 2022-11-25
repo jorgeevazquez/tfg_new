@@ -39,6 +39,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="5dp"
         tools:text="Ejemplo"
+
         app:counterMaxLength="200"
         app:counterEnabled="true"
         android:textAppearance="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" >
@@ -62,8 +63,8 @@
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"
+        android:background="@color/white"
         android:layout_marginStart="8dp"
-        android:background="@color/background_tv_main"
         android:progressBackgroundTint="@color/black"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
@@ -74,11 +75,13 @@
         android:id="@+id/btSelectImageFromGalery"
         android:layout_width="70dp"
         android:layout_height="70dp"
+
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toEndOf="@id/PbImage"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:ignore="SpeakableTextPresentCheck"
         android:src="@drawable/ic_image_search"
+
         android:layout_marginHorizontal="20dp"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -112,6 +115,7 @@
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

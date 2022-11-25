@@ -107,8 +107,6 @@ class MainViewModel: ViewModel() {
            document.documents.forEach{
               val image =  it.data?.get("image").toString()
               val notice =  it.data?.get("notice").toString()
-               /*text1.notice = notice
-               text1.image = image*/
                val classData = NewsDataClass(notice,image)
                list.add(classData)
                _listaNewsMutableLivedata.postValue(list)
