@@ -10,8 +10,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     app:cardElevation="15dp"
-    app:cardCornerRadius="15dp"
-    >
+    app:cardCornerRadius="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,12 +18,20 @@
             android:orientation="vertical"
             tools:ignore="UseCompoundDrawables">
 
+       <ImageButton
+           android:id="@+id/btDelete"
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:layout_gravity="right"
+           android:src="@drawable/delete"
+           android:background="@color/white"/>
+
         <ImageView
             android:id="@+id/imgCard"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_gravity="top"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/description_iv_cv" />
 
         <TextView

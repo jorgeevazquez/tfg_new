@@ -1,33 +1,24 @@
 package com.example.tfgnews
 
 import android.content.Context
+import android.icu.text.Transliterator.Position
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
 import com.example.tfgnews.databinding.ActivityMainBinding
-import com.google.android.gms.common.api.Response
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.Query
-import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import java.net.URI
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+
 
 class MainViewModel: ViewModel() {
+    lateinit var getId: DocumentSnapshot
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
     private val userId = mAuth.currentUser?.email.toString()
@@ -51,6 +42,7 @@ class MainViewModel: ViewModel() {
 
         text1.notice = binding.etCard.text.toString()
         val text = text1.notice
+        val textImage = text1.image
         if (text.isEmpty()) {
             Toast.makeText(context, "Empty Text", Toast.LENGTH_SHORT).show()
         } else downloadImage(list, binding)
@@ -97,6 +89,8 @@ class MainViewModel: ViewModel() {
                             "date" to date
                             ))
 
+            binding.tvProgressBar.text = "No hay imagen cargada"
+
         }
 
     }
@@ -119,6 +113,14 @@ class MainViewModel: ViewModel() {
                 Log.d("firebaseGet", "get failed with ", exception)
 
             }
+    }
+
+
+    fun deleteNews(){
+        val documentId = db.collection(userId).document().id
+        db.collection(userId).document(documentId)
+            .delete()
+
     }
 }
 

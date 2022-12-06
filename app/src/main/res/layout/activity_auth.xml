@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".AuthActivity">
 
 
@@ -41,8 +40,8 @@
         android:id="@+id/buttonRegister"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="Registrar"
         android:backgroundTint="@color/black_light"
+        android:text="Registrar"
         app:layout_constraintStart_toStartOf="@id/etEmailAddress"
         app:layout_constraintTop_toBottomOf="@id/etTextPassword" />
 
@@ -63,7 +62,8 @@
         android:src="@drawable/thebestmoment1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/ivPassword"
@@ -73,7 +73,8 @@
         android:src="@drawable/password1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/ivEmail"
@@ -83,30 +84,32 @@
         android:src="@drawable/email1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="225dp"
+        android:layout_height="176dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="284dp"
-        android:layout_height="172dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView6"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/vector" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="59dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        android:layout_width="55dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/png_transparent" />
+        android:src="@drawable/png_transparent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

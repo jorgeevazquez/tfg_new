@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.tfgnews.databinding.ActivityAuthBinding
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,7 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
         //Implement GoogleAnalytics
@@ -62,14 +64,11 @@ class AuthActivity : AppCompatActivity() {
                             showAlerts()
                         }
                     }
-
             }
 
         }
-
-
-
     }
+
     private fun showAlerts(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")

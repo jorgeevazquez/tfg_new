@@ -4,6 +4,8 @@ package com.example.tfgnews
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,11 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
+
 enum class ProviderType{
     BASIC
 }
-
-
 
 class MainActivity : AppCompatActivity() {
     private var list = mutableListOf<NewsDataClass>()
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val model: MainViewModel by viewModels()
         initsetupAdapter()
         model.getAllImagesMain(list)
+        //mBinding.etCard.addTextChangedListener(setAccessUpdateButton())
 
         model.listaNewsMutableLivedata.observe(this) {
             list = it
@@ -80,8 +82,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun showGalleryPhone() {
         getcontent.launch("image/*")
-        //mBinding.tvImage.text = uriCode.toString()
+    }
 
+
+    private fun setAccessUpdateButton() = object : TextWatcher{
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val text = mBinding.etCard.text?.trim()
+            if (text != null) {
+                mBinding.btnAdd.isEnabled = text.isNotEmpty()
+            }
+        }
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
     }
 
     }
