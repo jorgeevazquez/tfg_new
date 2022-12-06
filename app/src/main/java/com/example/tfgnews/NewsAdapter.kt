@@ -64,7 +64,6 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
 
 
     override fun getItemCount(): Int {
-        //Mutable.Size
         return news.size
     }
     fun updateAdapter(listNueva: MutableList<NewsDataClass>) {

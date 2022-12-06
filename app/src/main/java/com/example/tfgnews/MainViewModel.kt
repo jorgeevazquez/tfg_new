@@ -25,7 +25,7 @@ class MainViewModel: ViewModel() {
     val uuid = UUID.randomUUID()
     val imageName = "${uuid}.jpg"
     var text1 = NewsDataClass(String(), String())
-    val date = Timestamp.now()
+    //val date = Timestamp.now()
 
 
     //private val list = mutableListOf<NewsDataClass>()
@@ -82,6 +82,7 @@ class MainViewModel: ViewModel() {
             _listaNewsMutableLivedata.postValue(list)
             //subida a firebase Database
             //val datos = hashMapOf("Data" to list) // subida de info
+            val date = Timestamp.now()
             db.collection(userId)
                 .document()
                 .set(mapOf("notice" to text1.notice,
