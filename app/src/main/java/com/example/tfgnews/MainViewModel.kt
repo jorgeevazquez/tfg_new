@@ -1,7 +1,8 @@
 package com.example.tfgnews
 
 import android.content.Context
-import android.icu.text.Transliterator.Position
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -11,21 +12,20 @@ import androidx.lifecycle.ViewModel
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 
 class MainViewModel: ViewModel() {
-    lateinit var getId: DocumentSnapshot
+
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
     private val userId = mAuth.currentUser?.email.toString()
     val uuid = UUID.randomUUID()
     val imageName = "${uuid}.jpg"
     var text1 = NewsDataClass(String(), String())
-    //val date = Timestamp.now()
+
 
 
     //private val list = mutableListOf<NewsDataClass>()
@@ -45,24 +45,29 @@ class MainViewModel: ViewModel() {
         val textImage = text1.image
         if (text.isEmpty()) {
             Toast.makeText(context, "Empty Text", Toast.LENGTH_SHORT).show()
-        } else downloadImage(list, binding)
+        } else {
+            downloadImage(list, binding)
+            Toast.makeText(context, "TheBestMoment Upload", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
     fun saveFireStorage(
         uricode: Uri?,
-        binding: ActivityMainBinding
+        binding: ActivityMainBinding,
     ) {
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
         if (uricode != null) {
+
             storageReference.putFile(uricode)
                 .addOnProgressListener {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
                     binding.PbImage.progress = progress.toInt()
-                    binding.tvProgressBar.text = "Cargando imagen... + $progress"
+                    binding.tvProgressBar.text = "Cargando imagen... $progress%"
                 }
                 .addOnCompleteListener {
                     binding.tvProgressBar.text = "Imagen subida!"
+                    binding.btUploadImage.setBackgroundResource(R.drawable.ic_check)
                 }
         }
     }
@@ -80,8 +85,6 @@ class MainViewModel: ViewModel() {
             text1.notice = binding.etCard.text.toString()
             list.add(text1)
             _listaNewsMutableLivedata.postValue(list)
-            //subida a firebase Database
-            //val datos = hashMapOf("Data" to list) // subida de info
             val date = Timestamp.now()
             db.collection(userId)
                 .document()
@@ -91,6 +94,7 @@ class MainViewModel: ViewModel() {
                             ))
 
             binding.tvProgressBar.text = "No hay imagen cargada"
+
 
         }
 
@@ -108,7 +112,6 @@ class MainViewModel: ViewModel() {
 
            }
 
-
             }
             .addOnFailureListener { exception ->
                 Log.d("firebaseGet", "get failed with ", exception)
@@ -116,12 +119,5 @@ class MainViewModel: ViewModel() {
             }
     }
 
-
-    fun deleteNews(){
-        val documentId = db.collection(userId).document().id
-        db.collection(userId).document(documentId)
-            .delete()
-
-    }
 }
 

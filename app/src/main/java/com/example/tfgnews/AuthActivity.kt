@@ -20,12 +20,10 @@ class AuthActivity : AppCompatActivity() {
 
 
         //Implement GoogleAnalytics
-
         val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("message", "Integración de Firebase Completa")
         analytics.logEvent("InitScreen", bundle)
-
         //Setup
         setup()
 
@@ -73,7 +71,7 @@ class AuthActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
         builder.setMessage("Se ha producido un error autenticando al usuario")
-        builder.setPositiveButton("text",null)
+        builder.setPositiveButton("Intentar de nuevo",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }

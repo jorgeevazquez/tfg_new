@@ -87,14 +87,12 @@ class UploadImage: AppCompatActivity() {
                     uploadedImageReference.downloadUrl.addOnSuccessListener { uri ->
                         val downloadUrl = uri.toString()
                         val currentUserEmail = auth.currentUser!!.email.toString()
-                        //val userComment = userCommentText.text.toString()
                         val date = Timestamp.now()
 
                         //Database Process
                         val postHashMap = hashMapOf<String, Any>()
                         postHashMap["Image URL"] = downloadUrl
                         postHashMap["User Email"] = currentUserEmail
-                        //postHashMap["User Comment"] = userComment
                         postHashMap["Post Date"] = date
 
                         database.collection("Post").add(postHashMap).addOnCompleteListener { task ->

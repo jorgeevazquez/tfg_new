@@ -52,7 +52,6 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
                 updateAdapter(news)
             }
         }
-
         holder.mBinding.btDelete.setOnClickListener {
             deleteNews()
 
@@ -61,8 +60,6 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
     }
     // Get element from your dataset at this position and replace the
     // contents of the view with that element
-
-
     override fun getItemCount(): Int {
         return news.size
     }
@@ -70,7 +67,5 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         news = listNueva
         notifyDataSetChanged()
     }
-
-
     }
 
