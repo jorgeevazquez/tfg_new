@@ -26,6 +26,7 @@ class AuthActivity : AppCompatActivity() {
         analytics.logEvent("InitScreen", bundle)
         //Setup
         setup()
+        forgotPass()
 
     }
 
@@ -84,5 +85,11 @@ class AuthActivity : AppCompatActivity() {
         }
         startActivity(homeIntent)
 
+    }
+
+    private fun forgotPass(){
+        binding.tvForgotPassMain.setOnClickListener{
+            startActivity(Intent(this@AuthActivity, ForgotPassActivity2::class.java))
+        }
     }
 }

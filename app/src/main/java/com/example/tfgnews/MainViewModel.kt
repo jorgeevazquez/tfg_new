@@ -3,6 +3,7 @@ package com.example.tfgnews
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -42,12 +43,14 @@ class MainViewModel: ViewModel() {
 
         text1.notice = binding.etCard.text.toString()
         val text = text1.notice
-        val textImage = text1.image
+        //val textImage = text1.image
         if (text.isEmpty()) {
             Toast.makeText(context, "Empty Text", Toast.LENGTH_SHORT).show()
         } else {
             downloadImage(list, binding)
             Toast.makeText(context, "TheBestMoment Upload", Toast.LENGTH_SHORT).show()
+            binding.btSelectImageFromGalery.setBackgroundResource(R.color.background_button)
+            binding.btUploadImage.setBackgroundResource(R.color.background_button)
         }
     }
 
@@ -92,10 +95,7 @@ class MainViewModel: ViewModel() {
                             "image" to text1.image,
                             "date" to date
                             ))
-
             binding.tvProgressBar.text = "No hay imagen cargada"
-
-
         }
 
     }

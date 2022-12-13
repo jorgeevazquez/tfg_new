@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toFile
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import id.zelory.compressor.Compressor
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: NewsAdapter
     private var uriCode: Uri? = null
-    private lateinit var bitMap: Bitmap
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }
+
 
     }
 

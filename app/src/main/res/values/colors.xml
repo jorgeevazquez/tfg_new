@@ -12,4 +12,5 @@
     <color name="black_light">#8B272727</color>
     <color name="blue_light">#800353CF</color>
     <color name="background_tv_main">#2D01579B</color>
+    <color name="background_button">#1901469B</color>
 </resources>
