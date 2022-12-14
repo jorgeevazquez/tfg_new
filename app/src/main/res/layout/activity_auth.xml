@@ -7,45 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".AuthActivity">
 
+
     <EditText
         android:id="@+id/etEmailAddress"
         android:layout_width="298dp"
         android:layout_height="58dp"
-        android:layout_marginTop="213dp"
-        android:paddingHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="example@example.com"
         android:inputType="textEmailAddress"
+        android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.389"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@id/ivEmail" />
 
     <EditText
         android:id="@+id/etTextPassword"
         android:layout_width="298dp"
         android:layout_height="58dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="52dp"
         android:autofillHints="password"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.389"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etEmailAddress" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonRegister"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/black_light"
         android:text="Registrar"
-        app:layout_constraintStart_toStartOf="@id/etEmailAddress"
-        app:layout_constraintTop_toBottomOf="@id/etTextPassword" />
+        app:layout_constraintStart_toStartOf="@id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogin"
@@ -56,55 +56,59 @@
         android:text="Acceder"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTextPassword"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.024" />
 
     <ImageView
-        android:id="@+id/tvTheBestMoment"
-        android:layout_width="304dp"
-        android:layout_height="114dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/thebestmoment1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/ivTheBestMoment"
+        android:layout_width="525dp"
+        android:layout_height="284dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/background_image"
+        app:layout_constraintBottom_toTopOf="@+id/ivEmail"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="TODO" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivPassword"
         android:layout_width="72dp"
         android:layout_height="13dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginTop="28dp"
         android:contentDescription="TODO"
         android:src="@drawable/password1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/etEmailAddress" />
 
     <ImageView
         android:id="@+id/ivEmail"
         android:layout_width="46dp"
         android:layout_height="19dp"
-        android:layout_marginTop="192dp"
+       android:layout_marginTop="20dp"
         android:contentDescription="TODO"
         android:src="@drawable/email1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ivTheBestMoment" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvForgotPassMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:text="@string/forgot_pass_text"
+        android:textColor="@color/blue_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonLogin"
-        android:text="He olvidado la contraseña"
-        android:clickable="true" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

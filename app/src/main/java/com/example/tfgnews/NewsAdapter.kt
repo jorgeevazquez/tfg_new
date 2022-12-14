@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
@@ -37,6 +38,9 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         val textNew = news[position]
         holder.mBinding.tvCard.text = textNew.notice
        Glide.with(holder.mBinding.imgCard).load(textNew.image).into(holder.mBinding.imgCard)
+
+
+
         val db = FirebaseFirestore.getInstance()
         val mAuth = FirebaseAuth.getInstance()
         val userId = mAuth.currentUser?.email.toString()
@@ -50,11 +54,18 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
                     .delete()
                 news.removeAt(position)
                 updateAdapter(news)
+                notifyItemRemoved(position)
             }
         }
         holder.mBinding.btDelete.setOnClickListener {
-            deleteNews()
-
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Delete?")
+            builder.setMessage("Are you sure?")
+            builder.setPositiveButton("Yes"){_,_ ->
+                deleteNews()
+            }
+            builder.setNegativeButton("Cancel", null)
+            builder.show()
         }
 
     }

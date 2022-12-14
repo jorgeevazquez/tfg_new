@@ -6,30 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/image_button_change"
-        android:contentDescription="bottom"
-        android:paddingVertical="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        app:layout_constraintBottom_toTopOf="@id/btnAdd"
+        app:layout_constraintBottom_toTopOf="@id/frameMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/PbImage"
         tools:listitem="@layout/notice_card" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCard"
@@ -134,18 +121,6 @@
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <ImageButton
-        android:id="@+id/singOut"
-        android:layout_width="53dp"
-        android:layout_height="31dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/logout3"
-        android:text="Sing out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/tvProgressBar"
         android:layout_width="200dp"
@@ -166,5 +141,43 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="391dp" />
+
+    <LinearLayout
+        android:id="@+id/frameMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <ImageButton
+            android:id="@+id/singOut"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/logout3"
+            android:text="Sing out"
+            android:layout_gravity="left"
+            android:layout_marginHorizontal="10dp"/>
+
+        <Button
+            android:id="@+id/btnProfileFragment"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:text="Perfil" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@drawable/image_button_change"
+            android:contentDescription="bottom"
+            android:layout_marginHorizontal="10dp"
+            />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

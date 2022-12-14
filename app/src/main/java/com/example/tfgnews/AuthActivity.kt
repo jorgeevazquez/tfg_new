@@ -1,8 +1,11 @@
 package com.example.tfgnews
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.tfgnews.databinding.ActivityAuthBinding
@@ -16,6 +19,7 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val option = ActivityOptions.makeCustomAnimation(this,R.anim.slide_anim,R.anim.slide_anim_exit).toBundle()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
@@ -26,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
         analytics.logEvent("InitScreen", bundle)
         //Setup
         setup()
-        forgotPass()
+        forgotPass(option)
 
     }
 
@@ -38,9 +42,15 @@ class AuthActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance()
                     .createUserWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                     binding.etTextPassword.text.toString()).addOnCompleteListener {
-
                         if(it.isSuccessful){
-                            showHome(it.result.user?.email ?: "", ProviderType.BASIC)
+                            FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
+                                ?.addOnSuccessListener {
+                                    Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
+                                }
+                                ?.addOnFailureListener {
+                                    Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
+                                }
+                           // showHome(it.result.user?.email ?: "", ProviderType.BASIC)
 
                         }else{
                             showAlerts()
@@ -55,10 +65,13 @@ class AuthActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                         binding.etTextPassword.text.toString()).addOnCompleteListener {
-
-                        if(it.isSuccessful){
-                            showHome(it.result.user?.email ?: "", ProviderType.BASIC)
-
+                        if(it.isSuccessful) {
+                            val verifyEmail =
+                                FirebaseAuth.getInstance().currentUser?.isEmailVerified
+                        if (verifyEmail == true){
+                                showHome(it.result.user?.email ?: "", ProviderType.BASIC)
+                        }else
+                            Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
                         }else{
                             showAlerts()
                         }
@@ -78,7 +91,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun showHome(email:String, provider: ProviderType){
-
         val homeIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("Email",email)
             putExtra("provider", provider.name)
@@ -87,9 +99,12 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    private fun forgotPass(){
+
+    private fun forgotPass(option: Bundle){
         binding.tvForgotPassMain.setOnClickListener{
-            startActivity(Intent(this@AuthActivity, ForgotPassActivity2::class.java))
+            val intent = Intent(this@AuthActivity, ForgotPassActivity2::class.java)
+            startActivity(intent, option)
+
         }
     }
 }

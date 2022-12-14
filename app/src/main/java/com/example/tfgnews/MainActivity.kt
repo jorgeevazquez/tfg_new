@@ -1,6 +1,7 @@
 package com.example.tfgnews
 
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -12,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toFile
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: NewsAdapter
     private var uriCode: Uri? = null
+
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
@@ -56,8 +61,6 @@ class MainActivity : AppCompatActivity() {
         val model: MainViewModel by viewModels()
         initsetupAdapter()
         model.getAllImagesMain(list)
-
-
         model.listaNewsMutableLivedata.observe(this) {
             list = it
             mAdapter.updateAdapter(list)
@@ -66,28 +69,25 @@ class MainActivity : AppCompatActivity() {
 
         mBinding.btSelectImageFromGalery.setOnClickListener {
             showGalleryPhone()
-
-
         }
 
         mBinding.btUploadImage.setOnClickListener {
             model.saveFireStorage(uriCode, mBinding)
 
-
+        }
+        mBinding.btnProfileFragment.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
 
         mBinding.btnAdd.setOnClickListener {
             model.isTextEmptyDowloadImage(mBinding, list, this)
             initsetupAdapter()
-
-
         }
         mBinding.singOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }
-
-
     }
 
 
@@ -114,9 +114,7 @@ class MainActivity : AppCompatActivity() {
             if (text != null) {
                 mBinding.btnAdd.isEnabled = text.isNotEmpty()
             }*/
-
         }
-
         override fun afterTextChanged(p0: Editable?) {
         }
     }
