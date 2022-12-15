@@ -1,4 +1,4 @@
-package com.example.tfgnews
+package com.example.tfgnews.ui.interfaces
 
 interface onClick {
     fun onClick (position: Int)

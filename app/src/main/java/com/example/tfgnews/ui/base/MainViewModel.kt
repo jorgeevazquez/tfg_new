@@ -1,15 +1,14 @@
-package com.example.tfgnews
+package com.example.tfgnews.ui.base
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.tfgnews.data.NewsDataClass
+import com.example.tfgnews.R
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -27,12 +26,6 @@ class MainViewModel: ViewModel() {
     val imageName = "${uuid}.jpg"
     var text1 = NewsDataClass(String(), String())
 
-
-
-    //private val list = mutableListOf<NewsDataClass>()
-    private var _listaConsultaMutableLivedata: MutableLiveData<MutableList<NewsDataClass>> =
-        MutableLiveData()
-    val listaConsultaMutableLivedata: LiveData<MutableList<NewsDataClass>> get() = _listaConsultaMutableLivedata
     private var _listaNewsMutableLivedata: MutableLiveData<MutableList<NewsDataClass>> =
         MutableLiveData()
     val listaNewsMutableLivedata: MutableLiveData<MutableList<NewsDataClass>> get() = _listaNewsMutableLivedata
@@ -60,8 +53,8 @@ class MainViewModel: ViewModel() {
         binding: ActivityMainBinding,
     ) {
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
-        if (uricode != null) {
 
+        if (uricode != null) {
             storageReference.putFile(uricode)
                 .addOnProgressListener {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()

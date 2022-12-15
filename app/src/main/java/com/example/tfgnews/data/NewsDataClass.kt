@@ -1,4 +1,4 @@
-package com.example.tfgnews
+package com.example.tfgnews.data
 
 import android.net.Uri
 

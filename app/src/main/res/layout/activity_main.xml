@@ -84,18 +84,7 @@
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         />
 
-    <TextView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:text="3"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        app:layout_constraintVertical_bias="0.179" />
+
 
     <TextView
         android:layout_width="20dp"
@@ -145,38 +134,42 @@
     <LinearLayout
         android:id="@+id/frameMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
             android:id="@+id/singOut"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:background="@drawable/logout3"
+            android:src="@drawable/ic_logout_24"
+            android:background="@drawable/border_layout"
             android:text="Sing out"
             android:layout_gravity="left"
-            android:layout_marginHorizontal="10dp"/>
+            />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnProfileFragment"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="10dp"
-            android:text="Perfil" />
+            android:text="Perfil"
+            android:background="@drawable/border_layout"
+            android:src="@drawable/ic_person_24"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:background="@drawable/image_button_change"
+            android:src="@drawable/ic_add_24"
+            android:background="@color/blue_light"
             android:contentDescription="bottom"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="100dp"
             />
+
+
     </LinearLayout>
 
 

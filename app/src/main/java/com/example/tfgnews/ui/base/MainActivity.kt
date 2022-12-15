@@ -2,8 +2,6 @@ package com.example.tfgnews
 
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,18 +10,13 @@ import android.text.TextWatcher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.net.toFile
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.databinding.ActivityMainBinding
+import com.example.tfgnews.ui.base.MainViewModel
+import com.example.tfgnews.ui.base.NewsAdapter
+import com.example.tfgnews.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
-import id.zelory.compressor.Compressor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 enum class ProviderType{
@@ -35,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: NewsAdapter
     private var uriCode: Uri? = null
-
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
@@ -90,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initsetupAdapter() {
         mAdapter = NewsAdapter(list, this)
         mBinding.recyclerView.apply {
@@ -99,11 +90,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showGalleryPhone() {
         getcontent.launch("image/*")
     }
-
 
     private fun setAccessUpdateButton() = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

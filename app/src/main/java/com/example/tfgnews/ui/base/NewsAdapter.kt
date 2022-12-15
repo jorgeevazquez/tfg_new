@@ -1,22 +1,20 @@
-package com.example.tfgnews
+package com.example.tfgnews.ui.base
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
+import com.example.tfgnews.data.NewsDataClass
+import com.example.tfgnews.R
 import com.example.tfgnews.databinding.NoticeCardBinding
-import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.FirebaseStorage
 
 // La clase NewsAdapter extiende de RecyclerView.adapter
 class NewsAdapter(private var news: MutableList<NewsDataClass>, private val context: Context)
@@ -37,24 +35,31 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         //este metodo asocia la vista con los datos, debe contener un holder y la position
         val textNew = news[position]
         holder.mBinding.tvCard.text = textNew.notice
-       Glide.with(holder.mBinding.imgCard).load(textNew.image).into(holder.mBinding.imgCard)
-
-
-
-        val db = FirebaseFirestore.getInstance()
-        val mAuth = FirebaseAuth.getInstance()
-        val userId = mAuth.currentUser?.email.toString()
+        Glide.with(holder.mBinding.imgCard).load(textNew.image).into(holder.mBinding.imgCard)
 
         fun deleteNews() {
+            val db = FirebaseFirestore.getInstance()
+            val mAuth = FirebaseAuth.getInstance()
+            val userId = mAuth.currentUser?.email.toString()
+            val referenceUrl = textNew.image
+            val referenceStorage = FirebaseStorage.getInstance().getReferenceFromUrl(referenceUrl)
             val documentId = db.collection(userId)
             documentId.get().addOnSuccessListener {
                 val id = it.documents.get(position)
                 val id2 = id.id
                 db.collection(userId).document(id2)
                     .delete()
+                referenceStorage.delete().addOnSuccessListener {
+                    Log.i("DeleteStorage", "OK")
+                }
+                    .addOnFailureListener{
+                        Log.i("DeleteStorage", "$it")
+                    }
                 news.removeAt(position)
                 updateAdapter(news)
                 notifyItemRemoved(position)
+                Toast.makeText(context, "TheBestMoment delete sucess", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         holder.mBinding.btDelete.setOnClickListener {

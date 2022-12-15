@@ -1,9 +1,8 @@
-package com.example.tfgnews
+package com.example.tfgnews.ui.forgotpass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.tfgnews.databinding.ActivityAuthBinding
 import com.example.tfgnews.databinding.ActivityForgotPass2Binding
 import com.google.firebase.auth.FirebaseAuth
 
