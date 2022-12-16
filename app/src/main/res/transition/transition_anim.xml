@@ -3,6 +3,6 @@
 
 <explode
 
-    android:duration="5000" />
+    android:duration="100" />
 
 </transitionSet>

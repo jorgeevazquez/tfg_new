@@ -53,11 +53,13 @@ class MainActivity : AppCompatActivity() {
         val model: MainViewModel by viewModels()
         initsetupAdapter()
         model.getAllImagesMain(list)
+
         model.listaNewsMutableLivedata.observe(this) {
             list = it
             mAdapter.updateAdapter(list)
 
         }
+
 
         mBinding.btSelectImageFromGalery.setOnClickListener {
             showGalleryPhone()

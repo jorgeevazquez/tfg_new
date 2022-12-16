@@ -22,9 +22,7 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val option = ActivityOptions.makeCustomAnimation(this,
-            R.anim.slide_anim,
-            R.anim.slide_anim_exit).toBundle()
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
@@ -35,7 +33,7 @@ class AuthActivity : AppCompatActivity() {
         analytics.logEvent("InitScreen", bundle)
         //Setup
         setup()
-        forgotPass(option)
+        forgotPass()
 
     }
 
@@ -55,7 +53,6 @@ class AuthActivity : AppCompatActivity() {
                                 ?.addOnFailureListener {
                                     Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
                                 }
-                           // showHome(it.result.user?.email ?: "", ProviderType.BASIC)
 
                         }else{
                             showAlerts()
@@ -66,7 +63,6 @@ class AuthActivity : AppCompatActivity() {
 
         binding.buttonLogin.setOnClickListener {
             if (binding.etEmailAddress.text.isNotEmpty() && binding.etTextPassword.text.isNotEmpty()){
-
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                         binding.etTextPassword.text.toString()).addOnCompleteListener {
@@ -100,13 +96,20 @@ class AuthActivity : AppCompatActivity() {
             putExtra("Email",email)
             putExtra("provider", provider.name)
         }
+        /*val option = ActivityOptions.makeCustomAnimation(this,
+            R.anim.slide_anim,
+            R.anim.slide_anim_exit).toBundle()*/
         startActivity(homeIntent)
     }
 
-    private fun forgotPass(option: Bundle){
+    private fun forgotPass(){
         binding.tvForgotPassMain.setOnClickListener{
             val intent = Intent(this@AuthActivity, ForgotPassActivity2::class.java)
+            val option = ActivityOptions.makeCustomAnimation(this,
+                R.anim.slide_anim,
+                R.anim.slide_anim_exit).toBundle()
             startActivity(intent, option)
+
 
         }
     }

@@ -9,17 +9,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.example.tfgnews.MainActivity
 import com.example.tfgnews.databinding.ActivityProfileBinding
 import com.example.tfgnews.ui.auth.AuthActivity
-import com.example.tfgnews.ui.base.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : AppCompatActivity() {
 
 
     lateinit var binding: ActivityProfileBinding
-    var uriProfile : Uri? = null
+    private var uriProfile : Uri? = null
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()){ uri ->
             uriProfile  = uri
@@ -43,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         binding.btPutImageProfile.setOnClickListener {
             modelProfile.setImageProfile(uriProfile)
-            showMain()
+            finish()
             Toast.makeText(this, "Profile Image update success", Toast.LENGTH_LONG).show()
         }
 
@@ -60,7 +58,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun deleteAccount (){
+    private fun deleteAccount (){
         val user = FirebaseAuth.getInstance().currentUser
         user?.delete()
             ?.addOnCompleteListener {
@@ -69,23 +67,18 @@ class ProfileActivity : AppCompatActivity() {
                     showAuth()
                 }
             }
+
             ?.addOnFailureListener {
                 Toast.makeText(this, it.message.toString(), Toast.LENGTH_LONG).show()
             }
     }
+
     private fun showAuth(){
-        val AuthIntent = Intent(this, AuthActivity::class.java)
-        startActivity(AuthIntent)
-    }
-
-    private fun showMain(){
-        val homeIntent = Intent(this, MainActivity::class.java)
-        startActivity(homeIntent)
-
+        val authIntent = Intent(this, AuthActivity::class.java)
+        startActivity(authIntent)
     }
 
     private fun selectImageProfile(){
        getcontent.launch("image/*")
     }
-
 }
