@@ -77,11 +77,15 @@ class MainActivity : AppCompatActivity() {
         mBinding.btnAdd.setOnClickListener {
             model.isTextEmptyDowloadImage(mBinding, list, this)
             initsetupAdapter()
+            uriCode = null
+            NewsDataClass(null, null)
+
         }
         mBinding.singOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }
+        println(list)
     }
 
     private fun initsetupAdapter() {
@@ -109,5 +113,6 @@ class MainActivity : AppCompatActivity() {
         override fun afterTextChanged(p0: Editable?) {
         }
     }
+
 }
 

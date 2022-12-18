@@ -46,7 +46,7 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
             val mAuth = FirebaseAuth.getInstance()
             val userId = mAuth.currentUser?.email.toString()
             val referenceUrl = textNew.image
-            val referenceStorage = FirebaseStorage.getInstance().getReferenceFromUrl(referenceUrl)
+            val referenceStorage = FirebaseStorage.getInstance().getReferenceFromUrl(referenceUrl!!)
             val documentId = db.collection(userId)
             documentId.get().addOnSuccessListener {
                 val id = it.documents.get(position)
