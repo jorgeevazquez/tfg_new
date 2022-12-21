@@ -27,7 +27,7 @@
         android:id="@+id/etTextPassword"
         android:layout_width="298dp"
         android:layout_height="58dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="5dp"
         android:autofillHints="password"
         android:hint="Password"
         android:inputType="textPassword"
@@ -35,23 +35,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.389"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@id/ivPassword" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonRegister"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="2dp"
         android:backgroundTint="@color/black_light"
         android:text="Registrar"
         app:layout_constraintStart_toStartOf="@id/buttonLogin"
-        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterText" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogin"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="2dp"
         android:backgroundTint="@color/blue_light"
         android:text="Acceder"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
@@ -77,7 +77,7 @@
         android:id="@+id/ivPassword"
         android:layout_width="72dp"
         android:layout_height="13dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="18dp"
         android:contentDescription="TODO"
         android:src="@drawable/password1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
         android:id="@+id/ivEmail"
         android:layout_width="46dp"
         android:layout_height="19dp"
-       android:layout_marginTop="20dp"
+       android:layout_marginTop="15dp"
         android:contentDescription="TODO"
         android:src="@drawable/email1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,6 +109,34 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRegisterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTermsAndCondition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:text="If you don't have account fill your Email and Password and push register. You need to verify the email"
+        android:gravity="center"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTermsAndCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:text="Terms and Condition"
+        android:textColor="@color/blue_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

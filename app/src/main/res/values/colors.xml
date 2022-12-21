@@ -13,4 +13,5 @@
     <color name="blue_light">#800353CF</color>
     <color name="background_tv_main">#2D01579B</color>
     <color name="background_button">#1901469B</color>
+    <color name="Buttom_Disable">#752B2B2B</color>
 </resources>

@@ -39,15 +39,14 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         Glide.with(holder.mBinding.imgCard).load(textNew.image)
             .into(holder.mBinding.imgCard)
 
-
-
         fun deleteNews() {
             val db = FirebaseFirestore.getInstance()
             val mAuth = FirebaseAuth.getInstance()
             val userId = mAuth.currentUser?.email.toString()
             val referenceUrl = textNew.image
+            println(referenceUrl)
             val referenceStorage = FirebaseStorage.getInstance().getReferenceFromUrl(referenceUrl!!)
-            val documentId = db.collection(userId)
+            val documentId = db.collection(userId).orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
             documentId.get().addOnSuccessListener {
                 val id = it.documents.get(position)
                 val id2 = id.id
@@ -76,13 +75,14 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
             builder.setNegativeButton("Cancel", null)
             builder.show()
         }
-
     }
+
     // Get element from your dataset at this position and replace the
     // contents of the view with that element
     override fun getItemCount(): Int {
         return news.size
     }
+
     fun updateAdapter(listNueva: MutableList<NewsDataClass>) {
         news = listNueva
         notifyDataSetChanged()

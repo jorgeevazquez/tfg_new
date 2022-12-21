@@ -1,7 +1,9 @@
 package com.example.tfgnews.ui.base
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -30,30 +32,12 @@ class MainViewModel: ViewModel() {
         MutableLiveData()
     val listaNewsMutableLivedata: MutableLiveData<MutableList<NewsDataClass>> get() = _listaNewsMutableLivedata
 
-    fun isTextEmptyDowloadImage(
-        binding: ActivityMainBinding,
-        list: MutableList<NewsDataClass>,
-        context: Context
-    ) {
-
-        text1.notice = binding.etCard.text.toString()
-        val text = text1.notice
-        if (text.isNullOrEmpty()) {
-            Toast.makeText(context, "Empty Text", Toast.LENGTH_SHORT).show()
-        } else {
-            downloadImage(list, binding)
-            Toast.makeText(context, "TheBestMoment Upload", Toast.LENGTH_SHORT).show()
-            binding.btSelectImageFromGalery.setBackgroundResource(R.color.background_button)
-            binding.btUploadImage.setBackgroundResource(R.color.background_button)
-
-        }
-
-    }
-
 
     fun saveFireStorage(
         uricode: Uri?,
         binding: ActivityMainBinding,
+        list: MutableList<NewsDataClass>,
+        context: Context
     ) {
         uuid = UUID.randomUUID()
         val imageName = "${uuid}.jpg"
@@ -65,21 +49,33 @@ class MainViewModel: ViewModel() {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
                     binding.PbImage.progress = progress.toInt()
                     binding.tvProgressBar.text = "Cargando imagen... $progress%"
+                    binding.btnAdd.isEnabled = false
                 }
                 .addOnCompleteListener {
                     binding.tvProgressBar.text = "Imagen subida!"
-                    binding.btUploadImage.setBackgroundResource(R.drawable.ic_check)
-
+                    //binding.btUploadImage.setBackgroundResource(R.drawable.ic_check)
                 }
+                .addOnSuccessListener {
+                    isTextEmptyDowloadImage(binding,list,context,uricode)
+                    binding.btnAdd.isEnabled = true
+                    Log.i("firebaseUpload", "Imagen subida")
+                }
+                .addOnFailureListener {
+                    Log.i("firebaseUpload", "get failed with ")
+                }
+        }else {
+            Toast.makeText(context, "Empty Image", Toast.LENGTH_SHORT).show()
+            Log.i("firebaseUpload", "uricode Null ")
         }
 
     }
 
-    private fun downloadImage(list: MutableList<NewsDataClass>, binding: ActivityMainBinding) {
+    private fun downloadImage(list: MutableList<NewsDataClass>,
+                              binding: ActivityMainBinding,
+                              ) {
         //descargar URL
         val storageReferencetoDownload = FirebaseStorage.getInstance().reference
         val path = storageReferencetoDownload.child("$userId")
-
         //obtenerUrl y sube a Firebase Database
         var imageName = "${uuid}.jpg"
         path.child(imageName).downloadUrl.addOnSuccessListener { uri ->
@@ -96,11 +92,31 @@ class MainViewModel: ViewModel() {
                             "image" to text1.image,
                             "date" to date
                             ))
+            Log.i("firebaseUpload", "datos Subidos")
             binding.tvProgressBar.text = "No hay imagen cargada"
 
         }
+    }
 
 
+    fun isTextEmptyDowloadImage(
+        binding: ActivityMainBinding,
+        list: MutableList<NewsDataClass>,
+        context: Context,
+        uricode: Uri?
+
+    ) {
+        text1.notice = binding.etCard.text.toString()
+        val text = text1.notice
+        if (text.isNullOrEmpty()) {
+            Toast.makeText(context, "Empty Text or Empty Image", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            downloadImage(list, binding)
+            Toast.makeText(context, "TheBestMoment Upload", Toast.LENGTH_SHORT).show()
+            binding.btSelectImageFromGalery.setBackgroundResource(R.color.background_button)
+            //binding.btUploadImage.setBackgroundResource(R.color.background_button)
+        }
     }
 
     fun getAllImagesMain(list:MutableList<NewsDataClass>) {
@@ -114,7 +130,6 @@ class MainViewModel: ViewModel() {
                     val classData = NewsDataClass(notice, image)
                     list.add(classData)
                     _listaNewsMutableLivedata.postValue(list)
-                    println(list)
                 }
             }
                 .addOnFailureListener { exception ->

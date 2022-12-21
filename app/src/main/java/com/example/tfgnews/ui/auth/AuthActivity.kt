@@ -12,6 +12,7 @@ import com.example.tfgnews.MainActivity
 import com.example.tfgnews.ProviderType
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.ActivityAuthBinding
+import com.example.tfgnews.ui.termsandcondition.TermsAndConditionActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 
@@ -34,6 +35,7 @@ class AuthActivity : AppCompatActivity() {
         //Setup
         setup()
         forgotPass()
+        showTermsAndCondition()
 
     }
 
@@ -110,6 +112,16 @@ class AuthActivity : AppCompatActivity() {
                 R.anim.slide_anim_exit).toBundle()
             startActivity(intent, option)
 
+
+        }
+    }
+    private fun showTermsAndCondition(){
+        binding.tvTermsAndCondition.setOnClickListener {
+            val intent = Intent(this@AuthActivity, TermsAndConditionActivity::class.java)
+            val option = ActivityOptions.makeCustomAnimation(this,
+                R.anim.slide_anim,
+                R.anim.slide_anim_exit).toBundle()
+            startActivity(intent, option)
 
         }
     }
