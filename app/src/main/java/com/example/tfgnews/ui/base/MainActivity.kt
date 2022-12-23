@@ -1,7 +1,11 @@
 package com.example.tfgnews
 
 
+import android.Manifest
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -15,6 +19,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -73,18 +79,21 @@ class MainActivity : AppCompatActivity() {
             mAdapter.updateAdapter(list)
         }
 
-
         mBinding.btSelectImageFromGalery.setOnClickListener {
-            showGalleryPhone()
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                //Permiso no aceptado
+                requestReadPermission()
+            }else {
+                showGalleryPhone()
+            }
         }
-
-        /*mBinding.btUploadImage.setOnClickListener {
-           // model.saveFireStorage(uriCode, mBinding)
-        }*/
 
         mBinding.btnProfileFragment.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
+            val option = ActivityOptions.makeCustomAnimation(this,
+                R.anim.slide_anim,
+                R.anim.slide_anim_exit).toBundle()
+            startActivity(intent, option)
         }
 
         mBinding.btnAdd.setOnClickListener {
@@ -116,7 +125,6 @@ class MainActivity : AppCompatActivity() {
             adapter = mAdapter
         }
     }
-
     private fun showGalleryPhone() {
         getcontent.launch("image/*")
     }
@@ -133,6 +141,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(p0: Editable?) {
+        }
+    }
+
+    //PERMISOS
+
+    private fun requestReadPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+            //El usuario ya ha rechazado los permisos
+            Toast.makeText(this, "Permiso no aceptado, Ve a ajustes y acepta los permisos", Toast.LENGTH_SHORT).show()
+        }else{
+            //Pedir permisos
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 777)
+        }
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 777){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                showGalleryPhone()
+            }else{
+                Toast.makeText(this, "Permiso no aceptado, Ve a ajustes y acepta los permisos", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -63,7 +63,8 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
-        binding.buttonLogin.setOnClickListener {
+        binding.buttonLogin.setOnClickListener { view ->
+            view.isEnabled = false
             if (binding.etEmailAddress.text.isNotEmpty() && binding.etTextPassword.text.isNotEmpty()){
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(binding.etEmailAddress.text.toString(),
@@ -72,11 +73,14 @@ class AuthActivity : AppCompatActivity() {
                             val verifyEmail =
                                 FirebaseAuth.getInstance().currentUser?.isEmailVerified
                         if (verifyEmail == true){
-                                showHome(it.result.user?.email ?: "", ProviderType.BASIC)
+                            showHome(it.result.user?.email ?: "", ProviderType.BASIC)
+                            view.isEnabled = true
                         }else
-                            Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
+                         Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
+                         view.isEnabled = true
                         }else{
-                            showAlerts()
+                        showAlerts()
+                        view.isEnabled = true
                         }
                     }
             }
@@ -97,11 +101,13 @@ class AuthActivity : AppCompatActivity() {
         val homeIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("Email",email)
             putExtra("provider", provider.name)
+
         }
-        /*val option = ActivityOptions.makeCustomAnimation(this,
+        val option = ActivityOptions.makeCustomAnimation(this,
             R.anim.slide_anim,
-            R.anim.slide_anim_exit).toBundle()*/
-        startActivity(homeIntent)
+            R.anim.slide_anim_exit).toBundle()
+       // homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(homeIntent, option)
     }
 
     private fun forgotPass(){
