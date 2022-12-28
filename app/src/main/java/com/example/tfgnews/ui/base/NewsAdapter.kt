@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.NoticeCardBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -38,19 +39,19 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         holder.mBinding.tvCard.text = textNew.notice
         Glide.with(holder.mBinding.imgCard).load(textNew.image)
             .into(holder.mBinding.imgCard)
-
         fun deleteNews() {
             val db = FirebaseFirestore.getInstance()
             val mAuth = FirebaseAuth.getInstance()
             val userId = mAuth.currentUser?.email.toString()
+            val mAuthId = mAuth.uid.toString()
             val referenceUrl = textNew.image
             println(referenceUrl)
             val referenceStorage = FirebaseStorage.getInstance().getReferenceFromUrl(referenceUrl!!)
-            val documentId = db.collection(userId).orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
+            val documentId = db.collection(mAuthId).orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
             documentId.get().addOnSuccessListener {
                 val id = it.documents.get(position)
                 val id2 = id.id
-                db.collection(userId).document(id2)
+                db.collection(mAuthId).document(id2)
                     .delete()
                 referenceStorage.delete().addOnSuccessListener {
                     Log.i("DeleteStorage", "OK")
@@ -61,7 +62,7 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
                 news.removeAt(position)
                 updateAdapter(news)
                 notifyItemRemoved(position)
-                Toast.makeText(context, "TheBestMoment delete sucess", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "TheBestMoment delete success", Toast.LENGTH_SHORT)
                     .show()
             }
         }

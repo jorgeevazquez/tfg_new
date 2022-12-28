@@ -12,7 +12,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -21,7 +20,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.tfgnews.data.NewsDataClass
@@ -65,11 +63,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         val model: MainViewModel by viewModels()
-        initsetupAdapter()
+        model.setAuthUser()
+        initSetupAdapter()
         model.getAllImagesMain(list)
         mBinding.btnAdd.isEnabled = true
 
@@ -102,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Empty text", Toast.LENGTH_SHORT).show()
             }else{
                 model.saveFireStorage(uriCode, mBinding, list, this)
-                initsetupAdapter()
+                initSetupAdapter()
                 uriCode = null
                 mBinding.btnAdd.isEnabled = true
 
@@ -118,10 +115,10 @@ class MainActivity : AppCompatActivity() {
         println(list)
     }
 
-    private fun initsetupAdapter() {
+    private fun initSetupAdapter() {
         mAdapter = NewsAdapter(list, this)
         mBinding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
             adapter = mAdapter
         }
     }
@@ -169,6 +166,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }
 

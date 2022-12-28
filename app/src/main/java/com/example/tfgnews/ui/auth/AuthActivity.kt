@@ -43,7 +43,6 @@ class AuthActivity : AppCompatActivity() {
         title = "Autenticacion"
         binding.buttonRegister.setOnClickListener{
             if (binding.etEmailAddress.text.isNotEmpty() && binding.etTextPassword.text.isNotEmpty()){
-
                 FirebaseAuth.getInstance()
                     .createUserWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                     binding.etTextPassword.text.toString()).addOnCompleteListener {
@@ -57,9 +56,11 @@ class AuthActivity : AppCompatActivity() {
                                 }
 
                         }else{
-                            showAlerts()
+                            showAlertsRegister()
                         }
                     }
+            }else{
+                showAlertsRegister()
             }
         }
 
@@ -79,24 +80,34 @@ class AuthActivity : AppCompatActivity() {
                          Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
                          view.isEnabled = true
                         }else{
-                        showAlerts()
+                            showAlertsLogin()
                         view.isEnabled = true
                         }
                     }
+            }else{
+                showAlertsLogin()
+                view.isEnabled = true
             }
 
         }
     }
 
-    private fun showAlerts(){
+    private fun showAlertsLogin(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setMessage("Se ha producido un error autenticando al usuario, verifica Email y contraseña")
         builder.setPositiveButton("Intentar de nuevo",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
+    private fun showAlertsRegister(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Se ha producido un error registrando al usuario, verifica Email y contraseña")
+        builder.setPositiveButton("Intentar de nuevo",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
     private fun showHome(email:String, provider: ProviderType){
         val homeIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("Email",email)
@@ -109,7 +120,6 @@ class AuthActivity : AppCompatActivity() {
        // homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(homeIntent, option)
     }
-
     private fun forgotPass(){
         binding.tvForgotPassMain.setOnClickListener{
             val intent = Intent(this@AuthActivity, ForgotPassActivity2::class.java)

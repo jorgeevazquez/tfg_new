@@ -23,6 +23,7 @@
            android:layout_width="40dp"
            android:layout_height="40dp"
            android:layout_gravity="right"
+           android:layout_marginEnd="10dp"
            android:src="@drawable/delete"
            android:background="@drawable/border_layout"
            android:layout_marginTop="10dp"/>
@@ -39,11 +40,13 @@
             android:id="@+id/tvCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:background="@color/white"
             android:gravity="bottom"
             tools:text="prueba"
+            android:paddingHorizontal="10dp"
             android:textColor="@color/black"
             android:fontFamily="sans-serif-medium"/>
+
         </LinearLayout>
 </androidx.cardview.widget.CardView>

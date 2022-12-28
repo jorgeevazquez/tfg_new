@@ -40,7 +40,7 @@ class ProfileActivity : AppCompatActivity() {
             selectImageProfile()
         }
         binding.btPutImageProfile.setOnClickListener {
-            modelProfile.setImageProfile(uriProfile)
+            modelProfile.setImageProfile(uriProfile, binding)
             finish()
             Toast.makeText(this, "Profile Image update success", Toast.LENGTH_LONG).show()
         }

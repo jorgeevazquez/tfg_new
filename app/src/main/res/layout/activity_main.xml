@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/til_hint_text"
             android:maxLines="5"
-
             android:paddingBottom="20dp"
             android:textColorHint="#616161" />
 
@@ -51,6 +50,7 @@
         android:layout_marginStart="8dp"
         android:background="@color/white"
         android:progressBackgroundTint="@color/black"
+        android:indeterminate="false"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,12 +65,14 @@
         android:layout_marginStart="64dp"
         android:background="@color/white"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_image_search"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toEndOf="@id/PbImage"
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        />
 
     <!--TextView
         android:layout_width="20dp"
@@ -141,38 +143,63 @@
 
         <ImageButton
             android:id="@+id/singOut"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_logout_24"
             android:background="@drawable/border_layout"
             android:text="Sing out"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
+            android:layout_marginStart="40dp"
             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAdd"
+            android:layout_width="230dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/background_gradient_transparent_button_add"
+            android:contentDescription="button"
+            android:saveEnabled="true"
+            android:text="Add Moment"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_add_24" />
 
         <ImageButton
             android:id="@+id/btnProfileFragment"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:text="Perfil"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/border_layout"
-            android:src="@drawable/ic_person_24"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnAdd"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_add_24"
-            android:background="@drawable/image_button_change"
-            android:contentDescription="bottom"
-            android:layout_marginStart="100dp"
-            android:saveEnabled="true"
-
-            />
-
+            android:src="@drawable/ic_person_24"
+            app:icon="@drawable/ic_person_24" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flMainPopupContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/flProgressBarDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient_transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.ActivityMainBinding
+import com.example.tfgnews.ui.interfaces.onClick
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +26,7 @@ class MainViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
+    private val mAuthId = mAuth.uid.toString()
     private val userId = mAuth.currentUser?.email.toString()
     private lateinit var uuid: UUID
     private var text1 = NewsDataClass(String(), String())
@@ -48,17 +51,22 @@ class MainViewModel: ViewModel() {
                 .addOnProgressListener {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
                     binding.PbImage.progress = progress.toInt()
+                    binding.PbImage.isIndeterminate = true
                     binding.tvProgressBar.text = "Cargando imagen... $progress%"
                     binding.btnAdd.isEnabled = false
+                    binding.flProgressBarDashboard.visibility = View.VISIBLE
+
                 }
                 .addOnCompleteListener {
                     binding.tvProgressBar.text = "Imagen subida!"
-                    //binding.btUploadImage.setBackgroundResource(R.drawable.ic_check)
+                    binding.PbImage.isIndeterminate = false
                 }
                 .addOnSuccessListener {
                     isTextEmptyDowloadImage(binding,list,context,uricode)
                     binding.btnAdd.isEnabled = true
+                    binding.flProgressBarDashboard.visibility = View.GONE
                     Log.i("firebaseUpload", "Imagen subida")
+
                 }
                 .addOnFailureListener {
                     Log.i("firebaseUpload", "get failed with ")
@@ -86,7 +94,7 @@ class MainViewModel: ViewModel() {
             list.add(text1)
             _listaNewsMutableLivedata.postValue(list)
             val date = Timestamp.now()
-            db.collection(userId)
+            db.collection(mAuthId)
                 .document()
                 .set(mapOf("notice" to text1.notice,
                             "image" to text1.image,
@@ -121,7 +129,7 @@ class MainViewModel: ViewModel() {
 
     fun getAllImagesMain(list:MutableList<NewsDataClass>) {
         viewModelScope.launch {
-            val allData = db.collection(userId)
+            val allData = db.collection(mAuthId)
                 .orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
             allData.get().addOnSuccessListener { document ->
                 document.documents.forEach {
@@ -130,6 +138,7 @@ class MainViewModel: ViewModel() {
                     val classData = NewsDataClass(notice, image)
                     list.add(classData)
                     _listaNewsMutableLivedata.postValue(list)
+
                 }
             }
                 .addOnFailureListener { exception ->
@@ -137,6 +146,13 @@ class MainViewModel: ViewModel() {
 
                 }
         }
+
+    }
+
+    fun setAuthUser(){
+        db.collection("users")
+            .document(mAuth.uid.toString())
+            .set(mapOf("userId" to mAuth.uid.toString()))
     }
 
 }

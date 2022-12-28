@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="90"
+        android:endColor="@color/tbm_dark_blue_transparent_button_add"
+        android:startColor="@color/tbm_dark_pink_transparent_button_add"
+        />
+    <stroke
+        android:color="@color/black"
+        android:width="1dp"/>
+</shape>

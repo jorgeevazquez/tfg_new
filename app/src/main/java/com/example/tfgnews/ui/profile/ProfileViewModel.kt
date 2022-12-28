@@ -3,6 +3,7 @@ package com.example.tfgnews.ui.profile
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.tfgnews.databinding.ActivityProfileBinding
@@ -13,10 +14,19 @@ class ProfileViewModel: ViewModel() {
     private val mAuth = FirebaseAuth.getInstance()
     private val userId = mAuth.currentUser?.email.toString()
 
-    fun setImageProfile(uri:Uri?){
+    fun setImageProfile(uri:Uri?, binding: ActivityProfileBinding){
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/ProfileImage.jpg")
         if (uri != null) {
             storageReference.putFile(uri)
+                .addOnProgressListener {
+                    binding.flProgressBarDashboardProfile.visibility = View.VISIBLE
+                }
+                .addOnCompleteListener {
+                    binding.flProgressBarDashboardProfile.visibility = View.GONE
+                }
+                .addOnFailureListener {
+                    Log.i("ProfileImage", it.toString())
+                }
             }
         }
 
@@ -26,7 +36,7 @@ class ProfileViewModel: ViewModel() {
         path.child("ProfileImage.jpg").downloadUrl.addOnSuccessListener {
             Glide.with(binding.ivProfile).load(it).circleCrop().into(binding.ivProfile)
             Log.i("FirebaseStorage", "ImageProfileOk")
-
         }
+
     }
 }

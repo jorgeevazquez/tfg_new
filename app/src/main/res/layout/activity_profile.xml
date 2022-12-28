@@ -13,8 +13,9 @@
         android:text="Email:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="270dp"/>
+        app:layout_constraintTop_toBottomOf="@id/btPutImageProfile"
+        android:layout_marginTop="25dp"
+        />
 
     <TextView
         android:id="@+id/tvProfile"
@@ -22,8 +23,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="300dp"/>
+        app:layout_constraintTop_toBottomOf="@id/tvProfileEmail"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"/>
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -34,28 +36,61 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="100dp"
         android:clickable="true"
-        android:background="@color/white"/>
+        android:focusable="true"
+        android:background="@drawable/placeholderprofile"
+        android:contentDescription="Image profile"
+         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btDeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="400dp"
-        android:text="Eliminar cuenta"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="50dp"
+        android:paddingHorizontal="10dp"
+        android:text="Delete Account"
+        android:background="@color/white"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btPutImageProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Actualizar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Update Image"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.996"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.237" />
+        app:layout_constraintTop_toBottomOf="@id/ivProfile"
+        android:background="@drawable/background_gradient_transparent_button_add"
+         />
+
+
+    <FrameLayout
+        android:id="@+id/flMainPopupContentProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/flProgressBarDashboardProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient_transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

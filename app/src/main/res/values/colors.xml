@@ -14,4 +14,10 @@
     <color name="background_tv_main">#2D01579B</color>
     <color name="background_button">#1901469B</color>
     <color name="Buttom_Disable">#752B2B2B</color>
+    <color name="tbm_dark_blue_transparent">#99002850</color>
+    <color name="tbm_dark_pink_transparent">#6B880E4F</color>
+    <color name="tbm_dark_blue_transparent_button">#99002850</color>
+    <color name="tbm_dark_pink_transparent_button">#61C10067</color>
+    <color name="tbm_dark_blue_transparent_button_add">#FFFFFF</color>
+    <color name="tbm_dark_pink_transparent_button_add">#61C10067</color>
 </resources>
