@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.forgotpass.ForgotPassActivity2">
+    tools:context=".ui.forgotpass.ForgotPassActivity2"
+    android:background="@color/grey_background">
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -14,6 +15,7 @@
         android:src="@drawable/background_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="-39dp" />
     <TextView
         android:id="@+id/tvForgotPass"
@@ -22,6 +24,7 @@
         android:text="Si has olvidado la contraseña introduce el Email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/ivBackgroundForgotPass" />
 
@@ -33,16 +36,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvForgotPass"
         android:hint="Example@Example.com"
+        android:textColor="@color/white"
         android:autofillHints="emailAddress"
         android:inputType="textEmailAddress" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btSubmit"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etForgotPass"
+        android:background="@drawable/background_gradient_transparent_button"
         android:text="Submit"/>
 
 

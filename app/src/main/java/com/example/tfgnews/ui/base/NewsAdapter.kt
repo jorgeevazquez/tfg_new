@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.NoticeCardBinding
+import com.example.tfgnews.ui.interfaces.onClick
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,6 +40,7 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         holder.mBinding.tvCard.text = textNew.notice
         Glide.with(holder.mBinding.imgCard).load(textNew.image)
             .into(holder.mBinding.imgCard)
+
         fun deleteNews() {
             val db = FirebaseFirestore.getInstance()
             val mAuth = FirebaseAuth.getInstance()
@@ -56,14 +58,16 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
                 referenceStorage.delete().addOnSuccessListener {
                     Log.i("DeleteStorage", "OK")
                 }
-                    .addOnFailureListener{
-                        Log.i("DeleteStorage", "$it")
+                    .addOnFailureListener{ itException ->
+                        Log.i("DeleteStorage", "$itException")
                     }
                 news.removeAt(position)
                 updateAdapter(news)
                 notifyItemRemoved(position)
                 Toast.makeText(context, "TheBestMoment delete success", Toast.LENGTH_SHORT)
                     .show()
+
+
             }
         }
         holder.mBinding.btDelete.setOnClickListener {

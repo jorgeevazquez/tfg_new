@@ -21,11 +21,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.example.tfgnews.ui.base.MainViewModel
 import com.example.tfgnews.ui.base.NewsAdapter
+import com.example.tfgnews.ui.interfaces.onClick
 import com.example.tfgnews.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import java.io.ByteArrayOutputStream
@@ -63,12 +65,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         val model: MainViewModel by viewModels()
         model.setAuthUser()
         initSetupAdapter()
         model.getAllImagesMain(list)
         mBinding.btnAdd.isEnabled = true
+
+        mBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0){
+                    mBinding.btnAdd.shrink()
+                }else{
+                    mBinding.btnAdd.extend()
+                }
+            }
+
+        })
+
+
 
 
         model.listaNewsMutableLivedata.observe(this) {
@@ -102,24 +118,26 @@ class MainActivity : AppCompatActivity() {
                 initSetupAdapter()
                 uriCode = null
                 mBinding.btnAdd.isEnabled = true
+                mBinding.btSelectImageFromGalery.setImageResource(R.drawable.ic_image_search)
+                mBinding.btSelectImageFromGalery.setBackgroundColor(resources.getColor(R.color.white))
 
             }
-            mBinding.btSelectImageFromGalery.setImageResource(R.drawable.ic_image_search)
-            mBinding.btSelectImageFromGalery.setBackgroundColor(resources.getColor(R.color.white))
+
         }
 
         mBinding.singOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }
-        println(list)
     }
 
     private fun initSetupAdapter() {
         mAdapter = NewsAdapter(list, this)
         mBinding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+                .apply { stackFromEnd = true }
             adapter = mAdapter
+
         }
     }
     private fun showGalleryPhone() {
@@ -167,4 +185,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
 

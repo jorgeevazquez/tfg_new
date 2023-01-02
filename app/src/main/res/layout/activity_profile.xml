@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileActivity">
+    tools:context=".ui.profile.ProfileActivity"
+    android:background="@color/grey_background">
 
     <TextView
         android:id="@+id/tvProfileEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btPutImageProfile"
@@ -24,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvProfileEmail"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginTop="8dp"/>
 
     <ImageView
@@ -37,11 +39,13 @@
         android:layout_marginTop="100dp"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/placeholderprofile"
+        android:background="@color/grey_background"
+        android:src="@drawable/placeholderprofile"
+
         android:contentDescription="Image profile"
          />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btDeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +55,9 @@
         android:layout_marginBottom="50dp"
         android:paddingHorizontal="10dp"
         android:text="Delete Account"
-        android:background="@color/white"/>
+        android:background="@color/grey_background"
+
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btPutImageProfile"

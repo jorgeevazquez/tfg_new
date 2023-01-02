@@ -15,6 +15,8 @@ import com.example.tfgnews.databinding.ActivityAuthBinding
 import com.example.tfgnews.ui.termsandcondition.TermsAndConditionActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AuthActivity : AppCompatActivity() {
     lateinit var binding: ActivityAuthBinding
@@ -23,8 +25,7 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
 
         //Implement GoogleAnalytics
@@ -32,17 +33,23 @@ class AuthActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("message", "Integración de Firebase Completa")
         analytics.logEvent("InitScreen", bundle)
-        //Setup
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+           showHomeWithLogin()
+        }
+
         setup()
         forgotPass()
         showTermsAndCondition()
+
+
 
     }
 
     private fun setup() {
         title = "Autenticacion"
         binding.buttonRegister.setOnClickListener{
-            if (binding.etEmailAddress.text.isNotEmpty() && binding.etTextPassword.text.isNotEmpty()){
+            if (binding.etEmailAddress.text!!.isNotEmpty() && binding.etTextPassword.text!!.isNotEmpty()){
                 FirebaseAuth.getInstance()
                     .createUserWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                     binding.etTextPassword.text.toString()).addOnCompleteListener {
@@ -66,7 +73,7 @@ class AuthActivity : AppCompatActivity() {
 
         binding.buttonLogin.setOnClickListener { view ->
             view.isEnabled = false
-            if (binding.etEmailAddress.text.isNotEmpty() && binding.etTextPassword.text.isNotEmpty()){
+            if (binding.etEmailAddress.text!!.isNotEmpty() && binding.etTextPassword.text!!.isNotEmpty()){
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                         binding.etTextPassword.text.toString()).addOnCompleteListener {
@@ -119,6 +126,18 @@ class AuthActivity : AppCompatActivity() {
             R.anim.slide_anim_exit).toBundle()
        // homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(homeIntent, option)
+    }
+
+
+    private fun showHomeWithLogin(){
+        val homeIntent = Intent(this, MainActivity::class.java)
+        val option = ActivityOptions.makeCustomAnimation(this,
+            R.anim.slide_anim,
+            R.anim.slide_anim_exit).toBundle()
+        // homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(homeIntent, option)
+        finish()
+
     }
     private fun forgotPass(){
         binding.tvForgotPassMain.setOnClickListener{

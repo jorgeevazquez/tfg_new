@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/grey_background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -14,20 +15,18 @@
         app:layout_constraintBottom_toTopOf="@id/frameMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/PbImage"
+        app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:listitem="@layout/notice_card" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCard"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_margin="5dp"
-        android:layout_marginTop="4dp"
         android:textAppearance="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btSelectImageFromGalery"
         tools:text="Ejemplo">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -36,43 +35,14 @@
             android:layout_height="wrap_content"
             android:hint="@string/til_hint_text"
             android:maxLines="5"
+            android:inputType="textMultiLine"
             android:paddingBottom="20dp"
+            android:background="@color/grey_background"
+            android:textColor="@color/white"
             android:textColorHint="#616161" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/PbImage"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/white"
-        android:progressBackgroundTint="@color/black"
-        android:indeterminate="false"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilCard" />
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btSelectImageFromGalery"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginStart="64dp"
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_image_search"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        app:layout_constraintStart_toEndOf="@id/PbImage"
-        app:layout_constraintTop_toBottomOf="@id/tilCard"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck"
-        />
 
     <!--TextView
         android:layout_width="20dp"
@@ -112,19 +82,33 @@
         app:layout_constraintTop_toBottomOf="@id/tilCard"
         tools:ignore="SpeakableTextPresentCheck" /> -->
 
-    <TextView
-        android:id="@+id/tvProgressBar"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="No hay imagen cargada"
+    <!--ProgressBar
+        android:id="@+id/PbImage"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:indeterminate="false"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/PbImage"
+        tools:layout_editor_absoluteX="301dp"
+        tools:layout_editor_absoluteY="104dp" /> -->
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btSelectImageFromGalery"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_margin="4dp"
+        android:background="@color/grey_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_image_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilCard"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -139,12 +123,15 @@
         android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:background="@color/black">
 
         <ImageButton
             android:id="@+id/singOut"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="@drawable/ic_logout_24"
             android:background="@drawable/border_layout"
             android:text="Sing out"
@@ -152,23 +139,26 @@
             android:layout_marginStart="40dp"
             />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnAdd"
-            android:layout_width="230dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/background_gradient_transparent_button_add"
+            android:layout_width="wrap_content"
+            android:layout_weight="0"
+            android:layout_height="wrap_content"
             android:contentDescription="button"
             android:saveEnabled="true"
-            android:text="Add Moment"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_add_24" />
+            app:icon="@drawable/ic_add_24"
+            android:text="ADD MOMENT"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:iconSize="20dp"
+            app:iconTint="@color/white"
+            android:backgroundTint="@color/card_background"/>
 
         <ImageButton
             android:id="@+id/btnProfileFragment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:layout_gravity="end"
             android:layout_marginEnd="40dp"
             android:background="@drawable/border_layout"
@@ -198,6 +188,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tvProgressBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:text = "Prueba para comprobar"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-black"
+            android:textSize="15sp"/>
 
     </FrameLayout>
 

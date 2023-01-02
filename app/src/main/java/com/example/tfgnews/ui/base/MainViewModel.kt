@@ -1,9 +1,8 @@
 package com.example.tfgnews.ui.base
 
-import android.app.Activity
+
 import android.content.Context
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -13,7 +12,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.ActivityMainBinding
-import com.example.tfgnews.ui.interfaces.onClick
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,8 +48,8 @@ class MainViewModel: ViewModel() {
             storageReference.putFile(uricode)
                 .addOnProgressListener {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
-                    binding.PbImage.progress = progress.toInt()
-                    binding.PbImage.isIndeterminate = true
+                   /* binding.PbImage.progress = progress.toInt()
+                    binding.PbImage.isIndeterminate = true*/
                     binding.tvProgressBar.text = "Cargando imagen... $progress%"
                     binding.btnAdd.isEnabled = false
                     binding.flProgressBarDashboard.visibility = View.VISIBLE
@@ -59,7 +57,7 @@ class MainViewModel: ViewModel() {
                 }
                 .addOnCompleteListener {
                     binding.tvProgressBar.text = "Imagen subida!"
-                    binding.PbImage.isIndeterminate = false
+                   /* binding.PbImage.isIndeterminate = false*/
                 }
                 .addOnSuccessListener {
                     isTextEmptyDowloadImage(binding,list,context,uricode)
@@ -84,7 +82,7 @@ class MainViewModel: ViewModel() {
         //descargar URL
         val storageReferencetoDownload = FirebaseStorage.getInstance().reference
         val path = storageReferencetoDownload.child("$userId")
-        //obtenerUrl y sube a Firebase Database
+        //obtener Url y sube a Firebase Database
         var imageName = "${uuid}.jpg"
         path.child(imageName).downloadUrl.addOnSuccessListener { uri ->
             val text1 = NewsDataClass(String(), String())
@@ -101,7 +99,7 @@ class MainViewModel: ViewModel() {
                             "date" to date
                             ))
             Log.i("firebaseUpload", "datos Subidos")
-            binding.tvProgressBar.text = "No hay imagen cargada"
+            binding.tvProgressBar.text = "Select Your Moment"
 
         }
     }

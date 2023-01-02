@@ -5,16 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.AuthActivity">
+    tools:context=".ui.auth.AuthActivity"
+    android:background="@color/grey_background">
 
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etEmailAddress"
         android:layout_width="298dp"
         android:layout_height="58dp"
         android:layout_marginTop="5dp"
         android:autofillHints=""
         android:ems="10"
+        android:textColor="@color/white"
         android:hint="example@example.com"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="10dp"
@@ -23,13 +25,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivEmail" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etTextPassword"
         android:layout_width="298dp"
         android:layout_height="58dp"
         android:layout_marginTop="5dp"
         android:autofillHints="password"
         android:hint="Password"
+        android:textColor="@color/white"
         android:inputType="textPassword"
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +47,7 @@
         android:layout_marginTop="2dp"
         android:backgroundTint="@color/black_light"
         android:text="Registrar"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@id/buttonLogin"
         app:layout_constraintTop_toBottomOf="@id/tvRegisterText" />
 
@@ -54,6 +58,7 @@
         android:layout_marginTop="2dp"
         android:backgroundTint="@color/blue_light"
         android:text="Acceder"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -121,7 +126,7 @@
         android:layout_marginTop="10dp"
         android:text="If you don't have account fill your Email and Password and push register. You need to verify the email"
         android:gravity="center"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTermsAndCondition"
