@@ -9,12 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.TransitionOptions
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.NoticeCardBinding
-import com.example.tfgnews.ui.interfaces.onClick
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -38,13 +36,12 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
         //este metodo asocia la vista con los datos, debe contener un holder y la position
         val textNew = news[position]
         holder.mBinding.tvCard.text = textNew.notice
-        Glide.with(holder.mBinding.imgCard).load(textNew.image)
+        Glide.with(holder.mBinding.imgCard).load(textNew.image).centerCrop()
             .into(holder.mBinding.imgCard)
 
         fun deleteNews() {
             val db = FirebaseFirestore.getInstance()
             val mAuth = FirebaseAuth.getInstance()
-            val userId = mAuth.currentUser?.email.toString()
             val mAuthId = mAuth.uid.toString()
             val referenceUrl = textNew.image
             println(referenceUrl)

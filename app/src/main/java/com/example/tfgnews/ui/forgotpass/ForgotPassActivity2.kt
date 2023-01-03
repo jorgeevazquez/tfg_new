@@ -1,5 +1,6 @@
 package com.example.tfgnews.ui.forgotpass
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,7 @@ class ForgotPassActivity2 : AppCompatActivity() {
         binding = ActivityForgotPass2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         binding.btSubmit.setOnClickListener{
             val email: String = binding.etForgotPass.text.toString().trim{it <= ' '}

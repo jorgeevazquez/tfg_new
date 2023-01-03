@@ -45,7 +45,7 @@
         android:contentDescription="Image profile"
          />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btDeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +54,8 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="50dp"
         android:paddingHorizontal="10dp"
-        android:text="Delete Account"
-        android:background="@color/grey_background"
+        android:text="@string/delete_account"
+        android:background="@color/black"
 
         />
 
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivProfile"
-        android:background="@drawable/background_gradient_transparent_button_add"
+        android:background="@drawable/background_button_add"
          />
 
 

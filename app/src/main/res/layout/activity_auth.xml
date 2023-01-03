@@ -17,7 +17,7 @@
         android:autofillHints=""
         android:ems="10"
         android:textColor="@color/white"
-        android:hint="example@example.com"
+        android:hint="@string/example_email"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         android:layout_height="58dp"
         android:layout_marginTop="5dp"
         android:autofillHints="password"
-        android:hint="Password"
+        android:hint="@string/password_hint"
         android:textColor="@color/white"
         android:inputType="textPassword"
         android:paddingHorizontal="10dp"
@@ -40,24 +40,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivPassword" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonRegister"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="2dp"
-        android:backgroundTint="@color/black_light"
-        android:text="Registrar"
+        android:background="@drawable/background_button_add"
+        android:text="@string/register"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@id/buttonLogin"
         app:layout_constraintTop_toBottomOf="@id/tvRegisterText" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogin"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="2dp"
         android:backgroundTint="@color/blue_light"
-        android:text="Acceder"
+        android:text="@string/sign_in"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +113,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin"
+        android:focusable="true" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -134,12 +135,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
-        android:text="Terms and Condition"
+        android:text="@string/terms_and_condition"
         android:textColor="@color/blue_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain" />
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain"
+        android:focusable="true" />
 
 
 

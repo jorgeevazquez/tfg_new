@@ -50,13 +50,13 @@ class MainViewModel: ViewModel() {
                     val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
                    /* binding.PbImage.progress = progress.toInt()
                     binding.PbImage.isIndeterminate = true*/
-                    binding.tvProgressBar.text = "Cargando imagen... $progress%"
+                    binding.tvProgressBar.text = "Loading $progress%"
                     binding.btnAdd.isEnabled = false
                     binding.flProgressBarDashboard.visibility = View.VISIBLE
 
                 }
                 .addOnCompleteListener {
-                    binding.tvProgressBar.text = "Imagen subida!"
+                    binding.tvProgressBar.text = "Upload!"
                    /* binding.PbImage.isIndeterminate = false*/
                 }
                 .addOnSuccessListener {

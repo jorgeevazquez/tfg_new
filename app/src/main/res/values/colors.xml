@@ -19,6 +19,6 @@
     <color name="tbm_dark_pink_transparent">#6B880E4F</color>
     <color name="tbm_dark_blue_transparent_button">#99002850</color>
     <color name="tbm_dark_pink_transparent_button">#61C10067</color>
-    <color name="tbm_dark_blue_transparent_button_add">#FFFFFF</color>
+    <color name="tbm_dark_blue_transparent_button_add">#E12E2E2E</color>
     <color name="tbm_dark_pink_transparent_button_add">#61C10067</color>
 </resources>

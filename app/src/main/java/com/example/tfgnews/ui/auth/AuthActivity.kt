@@ -2,6 +2,7 @@ package com.example.tfgnews.ui.auth
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -19,19 +20,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class AuthActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAuthBinding
+    private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         //Implement GoogleAnalytics
         val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
-        bundle.putString("message", "Integración de Firebase Completa")
+        bundle.putString("message", "Integrate de Firebase Complete")
         analytics.logEvent("InitScreen", bundle)
         val user = Firebase.auth.currentUser
         if (user != null) {
@@ -47,7 +48,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun setup() {
-        title = "Autenticacion"
+        title = "Authentication"
         binding.buttonRegister.setOnClickListener{
             if (binding.etEmailAddress.text!!.isNotEmpty() && binding.etTextPassword.text!!.isNotEmpty()){
                 FirebaseAuth.getInstance()
@@ -56,16 +57,17 @@ class AuthActivity : AppCompatActivity() {
                         if(it.isSuccessful){
                             FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
                                 ?.addOnSuccessListener {
-                                    Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "Send Email, Please verify email", Toast.LENGTH_LONG).show()
                                 }
-                                ?.addOnFailureListener {
-                                    Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
+                                ?.addOnFailureListener { exception ->
+                                    Toast.makeText(this, exception.message.toString(), Toast.LENGTH_SHORT).show()
                                 }
 
                         }else{
                             showAlertsRegister()
                         }
                     }
+
             }else{
                 showAlertsRegister()
             }
@@ -84,7 +86,7 @@ class AuthActivity : AppCompatActivity() {
                             showHome(it.result.user?.email ?: "", ProviderType.BASIC)
                             view.isEnabled = true
                         }else
-                         Toast.makeText(this, "Please verify email", Toast.LENGTH_SHORT).show()
+                         Toast.makeText(this, "Please verify email or spam folder, ", Toast.LENGTH_SHORT).show()
                          view.isEnabled = true
                         }else{
                             showAlertsLogin()
@@ -101,17 +103,17 @@ class AuthActivity : AppCompatActivity() {
 
     private fun showAlertsLogin(){
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario, verifica Email y contraseña")
-        builder.setPositiveButton("Intentar de nuevo",null)
+        builder.setTitle("Authentication Failed")
+        builder.setMessage("Please check your Email or Password")
+        builder.setPositiveButton("Retry",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
     private fun showAlertsRegister(){
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error registrando al usuario, verifica Email y contraseña")
-        builder.setPositiveButton("Intentar de nuevo",null)
+        builder.setTitle("Registry Failed")
+        builder.setMessage("Please check your Email or Password (Try A combination of uppercase letters, lowercase letters, numbers, and symbols")
+        builder.setPositiveButton("Retry",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
@@ -124,7 +126,6 @@ class AuthActivity : AppCompatActivity() {
         val option = ActivityOptions.makeCustomAnimation(this,
             R.anim.slide_anim,
             R.anim.slide_anim_exit).toBundle()
-       // homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(homeIntent, option)
     }
 

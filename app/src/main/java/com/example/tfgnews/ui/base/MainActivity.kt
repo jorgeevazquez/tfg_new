@@ -5,6 +5,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,6 +13,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: NewsAdapter
     private var uriCode: Uri? = null
-    //private lateinit var byteArray: ByteArray
+    private lateinit var byteArray: ByteArray
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     .into(mBinding.btSelectImageFromGalery)
 
                 //Compresión funciona pero rota las fotos.
-                /*val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriCode)
+               /* val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriCode)
                 val stream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream)
                 byteArray = stream.toByteArray()*/
@@ -66,11 +68,13 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         val model: MainViewModel by viewModels()
         model.setAuthUser()
         initSetupAdapter()
         model.getAllImagesMain(list)
         mBinding.btnAdd.isEnabled = true
+
 
         mBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -81,9 +85,7 @@ class MainActivity : AppCompatActivity() {
                     mBinding.btnAdd.extend()
                 }
             }
-
         })
-
 
 
 
@@ -159,8 +161,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //PERMISOS
 
+
+    //PERMISOS
     private fun requestReadPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
             //El usuario ya ha rechazado los permisos

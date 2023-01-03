@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/grey_background">
+    android:background="@color/black">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -37,6 +37,8 @@
             android:maxLines="5"
             android:inputType="textMultiLine"
             android:paddingBottom="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
             android:background="@color/grey_background"
             android:textColor="@color/white"
             android:textColorHint="#616161" />
@@ -99,15 +101,14 @@
         android:id="@+id/btSelectImageFromGalery"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_margin="4dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/grey_background"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_image_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -120,7 +121,7 @@
     <LinearLayout
         android:id="@+id/frameMain"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
