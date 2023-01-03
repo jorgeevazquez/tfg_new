@@ -41,7 +41,6 @@
         android:focusable="true"
         android:background="@color/grey_background"
         android:src="@drawable/placeholderprofile"
-
         android:contentDescription="Image profile"
          />
 
