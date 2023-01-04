@@ -35,8 +35,10 @@ class ProfileViewModel: ViewModel() {
         val path = storageReferencetoDownload.child("$userId")
         path.child("ProfileImage.jpg").downloadUrl.addOnSuccessListener {
             Glide.with(binding.ivProfile).load(it).circleCrop().into(binding.ivProfile)
-            Log.i("FirebaseStorage", "ImageProfileOk")
+            Log.i("ImageProfile", "ImageProfileOk")
         }
-
+            .addOnFailureListener {
+                Log.i("ImageProfile", "Empty")
+            }
     }
 }

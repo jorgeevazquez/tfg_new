@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -13,6 +14,8 @@ import com.bumptech.glide.Glide
 import com.example.tfgnews.databinding.ActivityProfileBinding
 import com.example.tfgnews.ui.auth.AuthActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -61,6 +64,48 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun deleteAccount (){
         val user = FirebaseAuth.getInstance().currentUser
+        val mAuth = FirebaseAuth.getInstance()
+        val mAuthId = mAuth.uid.toString()
+        val db = FirebaseFirestore.getInstance()
+        val allData = db.collection(mAuthId)
+        val userId = mAuth.currentUser?.email.toString()
+
+        //Delete Firebase Database
+        allData.get().addOnSuccessListener { documents ->
+            documents.documents.forEach { document ->
+                val idDocument = document.id
+                db.collection(mAuthId).document(idDocument).delete().addOnSuccessListener {
+                    Log.i("DeleteDocument", "OK")
+                }
+                    .addOnFailureListener { exceptionDocument ->
+                        Log.i("DeleteDocument", exceptionDocument.message.toString() )
+                    }
+
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.i("DeleteGetDocument", exception.message.toString())
+            }
+
+        //Delete Firebase Storage
+        val referenceStorage = FirebaseStorage.getInstance().reference
+        referenceStorage.child(userId).listAll().addOnSuccessListener {
+            it.items.forEach {
+                Log.i("DeleteImage", it.toString())
+                it.delete().addOnSuccessListener {
+                    Log.i("DeleteImage", it.toString())
+                }
+                    .addOnFailureListener {
+                        Log.i("DeleteImage", it.toString())
+                    }
+            }
+            Log.i("DeleteImage", "OK")
+
+        }
+            .addOnFailureListener {
+                Log.i("DeleteImage", it.message.toString())
+            }
+        // Delete Users autentication
         user?.delete()
             ?.addOnCompleteListener {
                 if (it.isSuccessful){
