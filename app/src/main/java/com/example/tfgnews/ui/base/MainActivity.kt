@@ -2,20 +2,18 @@ package com.example.tfgnews
 
 
 import android.Manifest
-import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
+
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -29,10 +27,13 @@ import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.databinding.ActivityMainBinding
 import com.example.tfgnews.ui.base.MainViewModel
 import com.example.tfgnews.ui.base.NewsAdapter
-import com.example.tfgnews.ui.interfaces.onClick
 import com.example.tfgnews.ui.profile.ProfileActivity
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.auth.FirebaseAuth
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 
 enum class ProviderType{
@@ -40,28 +41,45 @@ enum class ProviderType{
 }
 
 class MainActivity : AppCompatActivity() {
+    private var unloaledAd = true
+    private var mInterstitialAd: InterstitialAd? = null
     private var list = mutableListOf<NewsDataClass>()
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: NewsAdapter
     private var uriCode: Uri? = null
-    private lateinit var byteArray: ByteArray
+    private  var byteArray: ByteArray? = null
+    private lateinit var file: File
     private val getcontent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
-                uriCode = uri
                 Glide.with(mBinding.btSelectImageFromGalery)
                     .load(uri)
                     .circleCrop()
                     .into(mBinding.btSelectImageFromGalery)
+                uriCode = uri
+               /* //file = File(uri.path!!)
+                lifecycleScope.launch{
+                    val compressImage =  Compressor.compress(this@MainActivity, File(uri.path!!)){
+                        format(Bitmap.CompressFormat.JPEG)
+                    }
+                    val compressUri = compressImage.toUri()
+                    uriCode = compressUri
 
+                }
+*/
                 //Compresión funciona pero rota las fotos.
-               /* val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriCode)
+                if(Build.VERSION.SDK_INT > 28){
+                val source = ImageDecoder.createSource(this.contentResolver, uriCode!!)
+                //val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriCode)
                 val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream)
-                byteArray = stream.toByteArray()*/
+                val decorde = ImageDecoder.decodeBitmap(source)
+                decorde.compress(Bitmap.CompressFormat.JPEG, 15, stream)
+                byteArray = stream.toByteArray()
                 //mBinding.btSelectImageFromGalery.setBackgroundResource(R.drawable.ic_check)
             }
+            }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +91,8 @@ class MainActivity : AppCompatActivity() {
         model.setAuthUser()
         initSetupAdapter()
         model.getAllImagesMain(list)
+        initAds()
+
         mBinding.btnAdd.isEnabled = true
 
 
@@ -88,7 +108,6 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
         model.listaNewsMutableLivedata.observe(this) {
             list = it
             mAdapter.updateAdapter(list)
@@ -100,6 +119,7 @@ class MainActivity : AppCompatActivity() {
                 requestReadPermission()
             }else {
                 showGalleryPhone()
+                getReadyAds()
             }
         }
 
@@ -116,13 +136,13 @@ class MainActivity : AppCompatActivity() {
             if (text.isNullOrEmpty()) {
                 Toast.makeText(this, "Empty text", Toast.LENGTH_SHORT).show()
             }else{
-                model.saveFireStorage(uriCode, mBinding, list, this)
+                model.saveFireStorage(byteArray, uriCode, mBinding, list, this)
                 initSetupAdapter()
                 uriCode = null
+                byteArray = null
                 mBinding.btnAdd.isEnabled = true
-                mBinding.btSelectImageFromGalery.setImageResource(R.drawable.ic_image_search)
-                mBinding.btSelectImageFromGalery.setBackgroundColor(resources.getColor(R.color.white))
-
+                mBinding.btSelectImageFromGalery.setImageResource(R.drawable.iconsgaleria)
+                showInterstitial()
             }
 
         }
@@ -146,19 +166,62 @@ class MainActivity : AppCompatActivity() {
         getcontent.launch("image/*")
     }
 
-    private fun setAccessUpdateButton() = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
+   // Google Ads
+    private fun initAds(){
+        MobileAds.initialize(this)
+    }
+    private fun showInterstitial(){
+        if (mInterstitialAd != null) {
+            unloaledAd = true
+            mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    // Called when a click is recorded for an ad.
+                   // Log.d(TAG, "Ad was clicked.")
+                }
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            /* val text = mBinding.etCard.text?.trim()
-            if (text != null) {
-                mBinding.btnAdd.isEnabled = text.isNotEmpty()
-            }*/
-        }
+                override fun onAdDismissedFullScreenContent() {
+                    // Called when ad is dismissed.
+                    //Log.d(TAG, "Ad dismissed fullscreen content.")
+                    mInterstitialAd = null
+                }
 
-        override fun afterTextChanged(p0: Editable?) {
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    // Called when ad fails to show.
+                    //Log.e(TAG, "Ad failed to show fullscreen content.")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdImpression() {
+                    // Called when an impression is recorded for an ad.
+                    //Log.d(TAG, "Ad recorded an impression.")
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    // Called when ad is shown.
+                    //Log.d(TAG, "Ad showed fullscreen content.")
+                }
+            }
+            mInterstitialAd?.show(this)
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.")
         }
+    }
+    private fun getReadyAds(){
+        var adRequest = AdRequest.Builder().build()
+        unloaledAd = false
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+               // Log.d(TAG, adError?.toString())
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                //Log.d(TAG, 'Ad was loaded.')
+                mInterstitialAd = interstitialAd
+            }
+
+        })
     }
 
 

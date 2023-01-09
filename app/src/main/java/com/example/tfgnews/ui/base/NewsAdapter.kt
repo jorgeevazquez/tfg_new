@@ -1,6 +1,7 @@
 package com.example.tfgnews.ui.base
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.bumptech.glide.TransitionOptions
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.tfgnews.data.NewsDataClass
 import com.example.tfgnews.R
 import com.example.tfgnews.databinding.NoticeCardBinding
@@ -32,14 +37,17 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val circularProgressDrawable = CircularProgressDrawable(context)
         //este metodo asocia la vista con los datos, debe contener un holder y la position
         val textNew = news[position]
         holder.mBinding.tvCard.text = textNew.notice
-        Glide.with(holder.mBinding.imgCard).load(textNew.image).centerCrop()
-            .into(holder.mBinding.imgCard)
+        Glide.with(holder.mBinding.imgCard)
+                .load(textNew.image)
+                .centerCrop()
+                .placeholder(progressBarPlaceHolder(circularProgressDrawable))
+                .into(holder.mBinding.imgCard)
 
-        fun deleteNews() {
+      fun deleteNews() {
             val db = FirebaseFirestore.getInstance()
             val mAuth = FirebaseAuth.getInstance()
             val mAuthId = mAuth.uid.toString()
@@ -63,8 +71,6 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
                 notifyItemRemoved(position)
                 Toast.makeText(context, "TheBestMoment delete success", Toast.LENGTH_SHORT)
                     .show()
-
-
             }
         }
         holder.mBinding.btDelete.setOnClickListener {
@@ -88,6 +94,15 @@ class NewsAdapter(private var news: MutableList<NewsDataClass>, private val cont
     fun updateAdapter(listNueva: MutableList<NewsDataClass>) {
         news = listNueva
         notifyDataSetChanged()
+    }
+
+    private fun progressBarPlaceHolder(circularProgressDrawable:CircularProgressDrawable)
+    : CircularProgressDrawable
+    {
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+        return circularProgressDrawable
     }
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TheBestMoments</string>
+    <string name="app_name">TheBestMoment</string>
     <string name="description_iv_cv">Image of new from gallery</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="til_hint_text">Write here...</string>

@@ -78,25 +78,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
+    <TextView
         android:id="@+id/ivPassword"
-        android:layout_width="72dp"
-        android:layout_height="13dp"
-        android:layout_marginTop="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:contentDescription="TODO"
-        android:src="@drawable/password1"
+        android:text="PASSWORD"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etEmailAddress" />
 
-    <ImageView
+    <TextView
         android:id="@+id/ivEmail"
-        android:layout_width="46dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
         android:contentDescription="TODO"
-        android:src="@drawable/email1"
+        android:text="EMAIL"
+        android:textStyle="bold"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"

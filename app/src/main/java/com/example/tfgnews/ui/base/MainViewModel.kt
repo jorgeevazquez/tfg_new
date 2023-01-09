@@ -35,6 +35,7 @@ class MainViewModel: ViewModel() {
 
 
     fun saveFireStorage(
+        byteArray: ByteArray?,
         uricode: Uri?,
         binding: ActivityMainBinding,
         list: MutableList<NewsDataClass>,
@@ -43,7 +44,6 @@ class MainViewModel: ViewModel() {
         uuid = UUID.randomUUID()
         val imageName = "${uuid}.jpg"
         val storageReference = FirebaseStorage.getInstance().getReference("$userId/$imageName")
-
         if (uricode != null) {
             storageReference.putFile(uricode)
                 .addOnProgressListener {
@@ -69,7 +69,33 @@ class MainViewModel: ViewModel() {
                 .addOnFailureListener {
                     Log.i("firebaseUpload", "get failed with ")
                 }
-        }else {
+        }else if(byteArray != null){
+            storageReference.putBytes(byteArray)
+                .addOnProgressListener {
+                    val progress = (100* it.bytesTransferred/it.totalByteCount).toDouble()
+                    /* binding.PbImage.progress = progress.toInt()
+                     binding.PbImage.isIndeterminate = true*/
+                    binding.tvProgressBar.text = "Loading $progress%"
+                    binding.btnAdd.isEnabled = false
+                    binding.flProgressBarDashboard.visibility = View.VISIBLE
+
+                }
+                .addOnCompleteListener {
+                    binding.tvProgressBar.text = "Upload!"
+                    /* binding.PbImage.isIndeterminate = false*/
+                }
+                .addOnSuccessListener {
+                    isTextEmptyDowloadImage(binding,list,context,uricode)
+                    binding.btnAdd.isEnabled = true
+                    binding.flProgressBarDashboard.visibility = View.GONE
+                    Log.i("firebaseUpload", "Imagen subida")
+
+                }
+                .addOnFailureListener {
+                    Log.i("firebaseUpload", "get failed with ")
+                }
+
+        }else{
             Toast.makeText(context, "Empty Image", Toast.LENGTH_SHORT).show()
             Log.i("firebaseUpload", "uricode Null ")
         }
