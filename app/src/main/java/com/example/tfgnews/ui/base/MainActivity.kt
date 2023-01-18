@@ -57,25 +57,15 @@ class MainActivity : AppCompatActivity() {
                     .circleCrop()
                     .into(mBinding.btSelectImageFromGalery)
                 uriCode = uri
-               /* //file = File(uri.path!!)
-                lifecycleScope.launch{
-                    val compressImage =  Compressor.compress(this@MainActivity, File(uri.path!!)){
-                        format(Bitmap.CompressFormat.JPEG)
-                    }
-                    val compressUri = compressImage.toUri()
-                    uriCode = compressUri
 
-                }
-*/
                 //Compresión funciona pero rota las fotos.
                 if(Build.VERSION.SDK_INT > 28){
                 val source = ImageDecoder.createSource(this.contentResolver, uriCode!!)
-                //val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriCode)
                 val stream = ByteArrayOutputStream()
                 val decorde = ImageDecoder.decodeBitmap(source)
                 decorde.compress(Bitmap.CompressFormat.JPEG, 15, stream)
                 byteArray = stream.toByteArray()
-                //mBinding.btSelectImageFromGalery.setBackgroundResource(R.drawable.ic_check)
+
             }
             }
         }
@@ -141,8 +131,9 @@ class MainActivity : AppCompatActivity() {
                 uriCode = null
                 byteArray = null
                 mBinding.btnAdd.isEnabled = true
-                mBinding.btSelectImageFromGalery.setImageResource(R.drawable.iconsgaleria)
+                mBinding.btSelectImageFromGalery.setImageResource(R.drawable.icons8imagen)
                 showInterstitial()
+                Log.i("Item", "Item Añadido")
             }
 
         }

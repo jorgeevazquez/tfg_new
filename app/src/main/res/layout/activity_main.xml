@@ -106,7 +106,7 @@
         android:background="@color/black"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/iconsgaleria"
+        android:src="@drawable/icons8imagen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />

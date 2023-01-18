@@ -60,7 +60,7 @@ class MainViewModel: ViewModel() {
                    /* binding.PbImage.isIndeterminate = false*/
                 }
                 .addOnSuccessListener {
-                    isTextEmptyDowloadImage(binding,list,context,uricode)
+                    isTextEmptyDowloadImage(binding,list,context)
                     binding.btnAdd.isEnabled = true
                     binding.flProgressBarDashboard.visibility = View.GONE
                     Log.i("firebaseUpload", "Imagen subida")
@@ -85,7 +85,7 @@ class MainViewModel: ViewModel() {
                     /* binding.PbImage.isIndeterminate = false*/
                 }
                 .addOnSuccessListener {
-                    isTextEmptyDowloadImage(binding,list,context,uricode)
+                    isTextEmptyDowloadImage(binding,list,context)
                     binding.btnAdd.isEnabled = true
                     binding.flProgressBarDashboard.visibility = View.GONE
                     Log.i("firebaseUpload", "Imagen subida")
@@ -134,8 +134,7 @@ class MainViewModel: ViewModel() {
     fun isTextEmptyDowloadImage(
         binding: ActivityMainBinding,
         list: MutableList<NewsDataClass>,
-        context: Context,
-        uricode: Uri?
+        context: Context
 
     ) {
         text1.notice = binding.etCard.text.toString()
