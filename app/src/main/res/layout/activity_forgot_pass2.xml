@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etForgotPass"
-        android:background="@drawable/background_button_add"
+        android:background="@color/black"
         android:textColor="@color/white"
         android:text="@string/reset_my_password_button"/>
 

@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:522542888076:android:5d5e0e9713839266c6b7a9",
+        "android_client_info": {
+          "package_name": "com.developer.tfgnews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522542888076-9u9glic1vp4v55c2ikcrl4fkd72o7bc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLvuFqtFKHXeyp_9TufuO0nbE0Tql4Qok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522542888076-9u9glic1vp4v55c2ikcrl4fkd72o7bc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:522542888076:android:d4e64d06d44577d7c6b7a9",
         "android_client_info": {
           "package_name": "com.example.tfgnews"

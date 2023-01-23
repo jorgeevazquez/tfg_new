@@ -44,12 +44,16 @@
         android:id="@+id/buttonRegister"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/background_button_add"
+        android:backgroundTint="@color/black"
         android:text="@string/register"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@id/buttonLogin"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterText" />
+        android:layout_marginTop="2dp"
+        android:enabled="false"
+        app:layout_constraintTop_toBottomOf="@id/etTextPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toEndOf="@+id/buttonLogin"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogin"
@@ -59,12 +63,11 @@
         android:backgroundTint="@color/blue_light"
         android:text="@string/sign_in"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.168"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTextPassword"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivTheBestMoment"
@@ -127,13 +130,16 @@
         android:id="@+id/tvRegisterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvTermsAndCondition"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
-        android:text="If you don't have account fill your Email and Password and push register. You need to verify the email"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textColor="@color/white"/>
+        android:text="@string/mainAdvisor"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTermsAndCondition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassMain" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTermsAndCondition"
@@ -141,15 +147,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/terms_and_condition"
         android:textColor="@color/blue_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvForgotPassMain"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterText" />
 
-
+    <CheckBox
+        android:id="@+id/checkBoxTerm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="I have read and agreed to the terms and condition"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tvTermsAndCondition"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
